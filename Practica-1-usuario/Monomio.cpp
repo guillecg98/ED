@@ -54,7 +54,8 @@ ed::Monomio & ed::Monomio::operator=(double const &x)
 ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 {
 	// COMPLETAR
-
+	#ifndef NDEBUG
+	#endif
 
 	// Se devuelve el objeto actual
 	return *this;
