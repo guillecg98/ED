@@ -55,6 +55,16 @@ ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 {
 	// COMPLETAR
 	#ifndef NDEBUG
+		assert( std::abs(m.getGrado()-this->getGrado()) < COTA_ERROR );
+	#endif
+
+	double valor = this->getCoeficiente();
+
+	this->setGrado(this->getGrado() + m.getGrado());
+	this->setCoeficiente(this->getCoeficiente() + m.getCoeficiente());
+
+	#ifndef NDEBUG
+		assert( std::abs(this->getCoeficiente() - (m.getCoeficiente() + valor)) < COTA_ERROR );
 	#endif
 
 	// Se devuelve el objeto actual
