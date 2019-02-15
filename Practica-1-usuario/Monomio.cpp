@@ -58,20 +58,100 @@ ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 		assert( std::abs(m.getGrado()-this->getGrado()) < COTA_ERROR );
 	#endif
 
-	double valor = this->getCoeficiente();
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
 
-	this->setGrado(this->getGrado() + m.getGrado());
-	this->setCoeficiente(this->getCoeficiente() + m.getCoeficiente());
+	this->setCoeficiente(valorC + m.getCoeficiente());
 
 	#ifndef NDEBUG
-		assert( std::abs(this->getCoeficiente() - (m.getCoeficiente() + valor)) < COTA_ERROR );
+		assert( std::abs(this->getCoeficiente() - (valorC + m.getCoeficiente())) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR )
 	#endif
 
 	// Se devuelve el objeto actual
 	return *this;
 }
 
+ed::Monomio & ed::Monomio::operator-=(ed::Monomio const &m)
+{
+	#ifndef NDEBUG
+		assert( std::abs(m.getGrado()-this->getGrado()) < COTA_ERROR );
+	#endif
 
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setCoeficiente(valorC - m.getCoeficiente());
+
+	#ifndef NDEBUG
+		assert( std::abs(this->getCoeficiente() - (valorC - m.getCoeficiente())) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR )
+	#endif
+}
+
+ed::Monomio & ed::Monomio::operator*=(ed::Monomio const &m)
+{
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setGrado(valorG + m.getGrado());
+	this->setCoeficiente(valorC * m.getCoeficiente());
+
+	#ifndef NDEBUG
+		assert( std::abs(this->getCoeficiente() - (valorC * m.getCoeficiente())) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - (valorG + m.getGrado())) < COTA_ERROR );
+	#endif
+}
+
+ed::Monomio & ed::Monomio::operator/=(ed::Monomio const &m)
+{
+	#ifndef NDEUBUG
+		assert( this->getGrado() > m.getGrado() );
+		assert( m.getCoeficiente() != 0.0 );
+	#endif
+
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setGrado(valorG - m.getGrado());
+	this->setCoeficiente(valorC / m.getCoeficiente());
+
+	#ifndef NDEUBUG
+		assert( std::abs(this->getCoeficiente() - (valorC / m.getCoeficiente())) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - (valorG - m.getGrado())) < COTA_ERROR );
+	#endif
+}
+
+
+ed::Monomio & ed::Monomio::operator*=(double const &x)
+{
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setCoeficiente(valorC * x);
+
+	#ifndef NDEUBUG
+		assert( std::abs(this->getCoeficiente() - (valorC * x)) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+	#endif
+}
+
+ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLARAN ASI LAS FUNCIONES, Y LA DUDA DE DECLARAR CONTINUAMENTE VALORC Y VALORG
+{
+	#ifndef NDEBUG
+		assert( x != 0.0 );
+	#endif
+
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setCoeficiente(valorC / x);
+
+	#ifndef NDEBUG
+		assert( std::abs(this->getCoeficiente() - (valorC / x)) < COTA_ERROR );
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+	#endif
+}
 
 // COMPLETAR EL RESTO DE OPERADORES
 
