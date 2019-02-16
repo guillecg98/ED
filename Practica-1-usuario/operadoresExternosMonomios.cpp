@@ -1,4 +1,4 @@
-/*! 
+/*!
    \file  operadoresExternosMonomios.cpp
 	\brief Ficheros con el código de los operadores externos de la clase Monomio
 */
@@ -11,41 +11,73 @@
 
 
 //  Se incluyen los operadores sobrecargados dentro del espacio de nombres ed
-namespace ed 
+namespace ed
 {
 	// Operadores de igualdad
-	
+
 	// COMPLETAR
 
 	bool operator==(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		// COMPLETAR Y MODIFICAR
-
-		// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-		return true;
+		if( (m1.getGrado() == m2.getGrado()) and (m1.getCoeficiente() == m2.getCoeficiente()) )
+		{
+			return true;
+		}
+		return false;
 	}
 
 	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
+	bool operator==(ed::Monomio const &m1, double const &x)
+	{
+		if( (m1.getGrado() == 0) and (m1.getCoeficiente() == x) )
+		{
+			return true;
+		}
+		return false;
+	}
 
-
-
+	bool operator==(double const &x, ed::Monomio const &m1)
+	{
+		if( (m1.getGrado() == 0) and (m1.getCoeficiente() == x) )
+		{
+			return true;
+		}
+		return false;
+	}
 	// Operadores de desigualdad
 
 	// COMPLETAR
 	bool operator!=(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		// COMPLETAR Y MODIFICAR
-
-		// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-		return true;
+		if( (m1.getGrado() != m2.getGrado()) || (m1.getCoeficiente() != m2.getCoeficiente()) )
+		{
+			return true;
+		}
+		return false;
 	}
 
 	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
+	bool operator!=(double const &x, ed::Monomio const &m1)
+	{
+		if( (m1.getGrado() != 0) || (m1.getCoeficiente() != x) )
+		{
+			return true;
+		}
+		return false;
+	}
 
+	bool operator!=(ed::Monomio const &m1, double const &x)
+	{
+		if( (m1.getGrado() != 0) || (m1.getCoeficiente() != x) )
+		{
+			return true;
+		}
+		return false;
+	}
 
 	////////////////////////////////////////////////////////////
 
-	// Operadores unarios prefijos 
+	// Operadores unarios prefijos
 
 	// COMPLETAR
 	ed::Monomio & operator+(ed::Monomio const & m)
@@ -72,7 +104,7 @@ namespace ed
 		// Se crea un nuevo objeto
 		ed::Monomio *nuevo = new ed::Monomio();
 
-	
+
 		// Se devuelve el resultado
 		return *nuevo;
 	}
@@ -98,7 +130,7 @@ namespace ed
 	/////////////////////////////////////////////////////////////////////////////
 
 	//  Sobrecarga del operador de entrada
-	istream &operator>>(istream &stream, ed::Monomio &m) 
+	istream &operator>>(istream &stream, ed::Monomio &m)
 	{
 		// COMPLETAR
 
@@ -108,7 +140,7 @@ namespace ed
 
 
 	//  Sobrecarga del operador de salida
-	ostream &operator<<(ostream &stream, ed::Monomio const &m) 
+	ostream &operator<<(ostream &stream, ed::Monomio const &m)
 	{
 		// COMPLETAR
 
