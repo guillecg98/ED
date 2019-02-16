@@ -65,7 +65,7 @@ ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC + m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR )
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
 	#endif
 
 	// Se devuelve el objeto actual
@@ -85,8 +85,10 @@ ed::Monomio & ed::Monomio::operator-=(ed::Monomio const &m)
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC - m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR )
+		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
 	#endif
+
+	return *this;
 }
 
 ed::Monomio & ed::Monomio::operator*=(ed::Monomio const &m)
@@ -101,6 +103,8 @@ ed::Monomio & ed::Monomio::operator*=(ed::Monomio const &m)
 		assert( std::abs(this->getCoeficiente() - (valorC * m.getCoeficiente())) < COTA_ERROR );
 		assert( std::abs(this->getGrado() - (valorG + m.getGrado())) < COTA_ERROR );
 	#endif
+
+	return *this;
 }
 
 ed::Monomio & ed::Monomio::operator/=(ed::Monomio const &m)
@@ -120,6 +124,8 @@ ed::Monomio & ed::Monomio::operator/=(ed::Monomio const &m)
 		assert( std::abs(this->getCoeficiente() - (valorC / m.getCoeficiente())) < COTA_ERROR );
 		assert( std::abs(this->getGrado() - (valorG - m.getGrado())) < COTA_ERROR );
 	#endif
+
+	return *this;
 }
 
 
@@ -134,6 +140,8 @@ ed::Monomio & ed::Monomio::operator*=(double const &x)
 		assert( std::abs(this->getCoeficiente() - (valorC * x)) < COTA_ERROR );
 		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
 	#endif
+
+	return *this;
 }
 
 ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLARAN ASI LAS FUNCIONES, Y LA DUDA DE DECLARAR CONTINUAMENTE VALORC Y VALORG
@@ -151,21 +159,81 @@ ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLAR
 		assert( std::abs(this->getCoeficiente() - (valorC / x)) < COTA_ERROR );
 		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
 	#endif
+
+	return *this;
 }
-
-// COMPLETAR EL RESTO DE OPERADORES
-
-
 
 ///////////////////////////////////////////////////////////////////////
 
 // Funciones lectura y escritura de la clase Monomio
 
 // COMPLETAR
+void ed::Monomio::leerMonomio()
+{
+	int valorG;
+	double valorC;
 
+	std::cout<<"Grado: ";
+	std::cin>>valorG;
+	std::cout<<"Coeficiente: ";
+	std::cin>>valorC;
 
+	this->setGrado(valorG);
+	this->setCoeficiente(valorC);
+
+	#ifndef NDEBUG
+		assert( this->getGrado() >= 0 );
+	#endif
+}
+
+void ed::Monomio::escribirMonomio()
+{
+	if(this->getCoeficiente() > 0)
+	{
+		switch (this->getGrado())
+		{
+			case 0:
+				std::cout<<this->getCoeficiente()<<"\n";
+			break;
+
+			case 1:
+				std::cout<<this->getCoeficiente()<<"x\n";
+			break;
+
+			default:
+				std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado()<<"\n";
+		}
+	}else {
+		if(this->getCoeficiente() < 0)
+		{
+			switch (this->getGrado())
+			{
+				case 0:
+					std::cout<<"-"<<this->getCoeficiente()<<"\n";
+				break;
+
+				case 1:
+					std::cout<<"-"<<this->getCoeficiente()<<"x\n";
+				break;
+
+				default:
+					std::cout<<"-"<<this->getCoeficiente()<<"x^"<<this->getGrado()<<"\n";
+			}
+		}else {
+			std::cout<<"Error: El coeficiente es 0\n";
+		}
+	}
+}
 ///////////////////////////////////////////////////////////////////////
 
 // Funciones auxiliares de la clase Monomio
 
 // COMPLETAR
+double ed::Monomio::calcularValor(double const &x)
+{
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+	double potencia = std::pow(x,valorG);
+
+	return valorC*potencia;
+}

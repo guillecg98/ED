@@ -85,7 +85,7 @@ void ed::testMonomio()
 	std::cout << RESET;
 	std::cout<< "x --> ";
 	std::cin >> x;
-/*
+
 	// Lectura y escritura usando funciones de la clase Monomio
 	std::cout << BIGREEN;
 	std::cout<< "Lectura y escritura"<< std::endl << std::endl;
@@ -311,8 +311,6 @@ void ed::testMonomio()
 	m3.escribirMonomio();
 	std::cout << std::endl;
 	std::cout<< "m3(" << x << ") = " << m3.calcularValor(x) << std::endl << std::endl;
-
-*/
 
 	// Fin
 	return;
