@@ -60,19 +60,22 @@ namespace ed
 	//! \name Operador binario de la resta
 	ed::Monomio & operator- (ed::Monomio const &m1, ed::Monomio const &m2);
 
-	// COMPLETAR
 
 
 	///////////////////////////////////////////////////////////////////////////
 	//! \name Operadores binarios de la multiplicación
+	ed::Monomio & operator* (ed::Monomio const &m1, ed::Monomio const &m2);
+	ed::Monomio & operator* (ed::Monomio const &m1, double const &x);
+	ed::Monomio & operator* (double const &x, ed::Monomio const &m1);
 
-	// COMPLETAR
 
 	///////////////////////////////////////////////////////////////////////////
 
 	//! \name Operadores binarios de la división
+	ed::Monomio & operator/ (ed::Monomio const &m1, ed::Monomio const &m2);
+	ed::Monomio & operator/ (ed::Monomio const &m1, double const &x);
+	ed::Monomio & operator/ (double const &x, ed::Monomio const &m1);
 
-	// COMPLETAR
 
 
 	/////////////////////////////////////////////////////////////////////////////

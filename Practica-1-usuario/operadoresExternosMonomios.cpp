@@ -127,10 +127,11 @@ namespace ed
 		ed::Monomio *nuevo = new ed::Monomio();
 
 		nuevo->setCoeficiente(m1.getCoeficiente() + m2.getCoeficiente());
+		nuevo->setGrado(m1.getGrado());
 
 		#ifndef NDEBUG
 			assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() + m2.getCoeficiente())) < COTA_ERROR );
-			//si se ha cumplido la precondicion no hace falta poner la postcondicion del grado :)
+			assert( (nuevo->getGrado() == m1.getGrado()) and (nuevo->getGrado() == m2.getGrado()) );
 		#endif
 
 		// Se devuelve el resultado
@@ -140,34 +141,131 @@ namespace ed
 
 	////////////
 	// Resta
-ed::Monomio & operator- (ED::Monomio const &m1, ed::Monomio const &m2)
+	ed::Monomio & operator- (ed::Monomio const &m1, ed::Monomio const &m2)
+	{
+		#ifndef NDEBUG
+			assert( m1.getGrado() == m2.getGrado() );
+		#endif
+
+		ed::Monomio *nuevo = new ed::Monomio();
+
+		nuevo->setCoeficiente(m1.getCoeficiente() - m2.getCoeficiente());
+		nuevo->setGrado(m1.getGrado());
+
+		#ifndef NDEBUG
+			assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() - m2.getCoeficiente())) < COTA_ERROR );
+			assert( (nuevo->getGrado() == m1.getGrado()) and (nuevo->getGrado() == m2.getGrado()) );
+		#endif
+		return *nuevo;
+}
+
+	//////////////////
+	// Multiplicación
+	ed::Monomio & operator* (ed::Monomio const &m1, ed::Monomio const &m2)
+	{
+		ed::Monomio *nuevo = new ed::Monomio();
+
+		nuevo->setGrado(m1.getGrado() + m2.getGrado());
+		nuevo->setCoeficiente(m1.getCoeficiente() * m2.getCoeficiente());
+
+		#ifndef NDEBUG
+			assert( nuevo->getGrado() == (m1.getGrado() + m2.getGrado()) );
+			assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() * m2.getCoeficiente())) < COTA_ERROR );
+		#endif
+
+		return *nuevo;
+	}
+
+	ed::Monomio & operator* (ed::Monomio const &m1, double const &x)
+	{
+		ed::Monomio *nuevo = new ed::Monomio();
+
+		nuevo->setCoeficiente(m1.getCoeficiente() * x);
+		nuevo->setGrado(m1.getGrado());
+
+		#ifndef NDEBUG
+			assert( nuevo->getGrado() == m1.getGrado() );
+			assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() * x)) < COTA_ERROR );
+		#endif
+
+		return *nuevo;
+	}
+
+	ed::Monomio & operator* (double const &x, ed::Monomio const &m1)
+	{
+		ed::Monomio *nuevo = new ed::Monomio();
+
+		nuevo->setCoeficiente(x * m1.getCoeficiente());
+		nuevo->setGrado(m1.getGrado());
+
+		#ifndef NDEBUG
+			assert( nuevo->getGrado() == m1.getGrado() );
+			assert( std::abs(nuevo->getCoeficiente() - (x * m1.getCoeficiente())) < COTA_ERROR );
+		#endif
+
+		return *nuevo;
+	}
+
+	////////////
+	// División
+ed::Monomio & operator/ (ed::Monomio const &m1, ed::Monomio const &m2)
 {
 	#ifndef NDEBUG
-		assert( m1.getGrado() == m2.getGrado() );
+		assert( m1.getGrado() >= m2.getGrado() );
+		assert( m2.getCoeficiente() != 0.0 );
 	#endif
 
 	ed::Monomio *nuevo = new ed::Monomio();
 
-	nuevo->setCoeficiente(m1.getCoeficiente() - m2.getCoeficiente());
+	nuevo->setCoeficiente(m1.getCoeficiente()/m2.getCoeficiente());
+	nuevo->setGrado(m1.getGrado()-m2.getGrado());
 
 	#ifndef NDEBUG
-		assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() - m2.getCoeficiente())) < COTA_ERROR );
-		//si se ha cumplido la precondicion no hace falta poner la postcondicion del grado :)
+		assert( nuevo->getGrado() == (m1.getGrado() - m2.getGrado()) );
+		assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() / m2.getCoeficiente())) < COTA_ERROR );
 	#endif
 
 	return *nuevo;
 }
 
+ed::Monomio & operator/ (ed::Monomio const &m1, double const &x)
+{
+	#ifndef NDEBUG
+		assert( x != 0.0 );
+	#endif
 
-	//////////////////
-	// Multiplicación
+	ed::Monomio *nuevo = new ed::Monomio();
 
-	// COMPLETAR
+	nuevo->setCoeficiente(m1.getCoeficiente()/x);
+	nuevo->setGrado(m1.getGrado());
 
-	////////////
-	// División
+	#ifndef NDEBUG
+		assert( nuevo->getGrado() == m1.getGrado() );
+		assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente()/x)) < COTA_ERROR );
+	#endif
 
-	// COMPLETAR
+	return *nuevo;
+}
+
+ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
+{
+	#ifndef NDEBUG
+		assert( m1.getGrado() == 0 );
+		assert( m1.getCoeficiente() != 0.0 );
+	#endif
+
+	ed::Monomio *nuevo = new ed::Monomio();
+
+	nuevo->setCoeficiente(x/m1.getCoeficiente());
+	nuevo->setGrado(m1.getGrado());
+
+	#ifndef NDEBUG
+		assert( nuevo->getGrado() == 0 );
+		assert( std::abs(nuevo->getCoeficiente() - (x / m1.getCoeficiente())) < COTA_ERROR );
+	#endif
+
+	return *nuevo;
+}
 
 
 	/////////////////////////////////////////////////////////////////////////////
