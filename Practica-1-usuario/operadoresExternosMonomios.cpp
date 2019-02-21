@@ -19,7 +19,7 @@ namespace ed
 
 	bool operator==(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		if( (m1.getGrado() == m2.getGrado()) and (m1.getCoeficiente() == m2.getCoeficiente()) )
+		if( (m1.getGrado() == m2.getGrado()) and ((m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -29,7 +29,7 @@ namespace ed
 	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
 	bool operator==(ed::Monomio const &m1, double const &x)
 	{
-		if( (m1.getGrado() == 0) and (m1.getCoeficiente() == x) )
+		if( (m1.getGrado() == 0) and ((m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -38,7 +38,7 @@ namespace ed
 
 	bool operator==(double const &x, ed::Monomio const &m1)
 	{
-		if( (m1.getGrado() == 0) and (m1.getCoeficiente() == x) )
+		if( (m1.getGrado() == 0) and ((m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -49,7 +49,7 @@ namespace ed
 	// COMPLETAR
 	bool operator!=(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		if( (m1.getGrado() != m2.getGrado()) || (m1.getCoeficiente() != m2.getCoeficiente()) )
+		if( (m1.getGrado() != m2.getGrado()) || ((m1.getCoeficiente() - m2.getCoeficiente()) > COTA_ERROR) )
 		{
 			return true;
 		}
@@ -59,7 +59,7 @@ namespace ed
 	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
 	bool operator!=(double const &x, ed::Monomio const &m1)
 	{
-		if( (m1.getGrado() != 0) || (m1.getCoeficiente() != x) )
+		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
 			return true;
 		}
@@ -68,7 +68,7 @@ namespace ed
 
 	bool operator!=(ed::Monomio const &m1, double const &x)
 	{
-		if( (m1.getGrado() != 0) || (m1.getCoeficiente() != x) )
+		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
 			return true;
 		}
@@ -86,13 +86,32 @@ namespace ed
 		// Se crea un nuevo objeto
 		ed::Monomio *nuevo = new ed::Monomio();
 
+		nuevo->setCoeficiente(m.getCoeficiente());
+		nuevo->setGrado(m.getGrado());
 
+		#ifndef NDEBUG
+			assert( std::abs(nuevo->getCoeficiente() - m.getCoeficiente()) < COTA_ERROR );
+			assert( nuevo->getGrado() == m.getGrado() );
+		#endif
 		// Se devuelve el resultado
 		return *nuevo;
 	}
 
 	// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
+	ed::Monomio & operator-(ed::Monomio const & m)
+	{
+		ed::Monomio *nuevo = new ed::Monomio();
 
+		nuevo->setCoeficiente(-m.getCoeficiente());
+		nuevo->setGrado(m.getGrado());
+
+		#ifndef NDEBUG
+			assert( std::abs(m.getCoeficiente() + nuevo->getCoeficiente()) < COTA_ERROR );
+			assert( nuevo->getGrado() == m.getGrado() );
+		#endif
+
+		return *nuevo;
+	}
 
 	////////////////////////////////////////////////////////////
 	// Operadores aritméticos binarios
@@ -101,9 +120,18 @@ namespace ed
 	ed::Monomio & operator+ (ed::Monomio const &m1, ed::Monomio const &m2)
 	{
 		// COMPLETAR Y MODIFICAR
+		#ifndef NDEBUG
+			assert( m1.getGrado() == m2.getGrado() );
+		#endif
 		// Se crea un nuevo objeto
 		ed::Monomio *nuevo = new ed::Monomio();
 
+		nuevo->setCoeficiente(m1.getCoeficiente() + m2.getCoeficiente());
+
+		#ifndef NDEBUG
+			assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() + m2.getCoeficiente())) < COTA_ERROR );
+			//si se ha cumplido la precondicion no hace falta poner la postcondicion del grado :)
+		#endif
 
 		// Se devuelve el resultado
 		return *nuevo;
@@ -112,8 +140,23 @@ namespace ed
 
 	////////////
 	// Resta
+ed::Monomio & operator- (ED::Monomio const &m1, ed::Monomio const &m2)
+{
+	#ifndef NDEBUG
+		assert( m1.getGrado() == m2.getGrado() );
+	#endif
 
-	// COMPLETAR
+	ed::Monomio *nuevo = new ed::Monomio();
+
+	nuevo->setCoeficiente(m1.getCoeficiente() - m2.getCoeficiente());
+
+	#ifndef NDEBUG
+		assert( std::abs(nuevo->getCoeficiente() - (m1.getCoeficiente() - m2.getCoeficiente())) < COTA_ERROR );
+		//si se ha cumplido la precondicion no hace falta poner la postcondicion del grado :)
+	#endif
+
+	return *nuevo;
+}
 
 
 	//////////////////

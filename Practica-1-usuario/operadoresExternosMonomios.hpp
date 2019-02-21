@@ -27,14 +27,14 @@ namespace ed
 	bool operator==(ed::Monomio const & m1, ed::Monomio const & m2);
 	bool operator==(ed::Monomio const & m1, double const &x);
 	bool operator==(double const &x, ed::Monomio const & m1);
-	
+
 
 	//! \name Operadores de desigualdad
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	bool operator!=(ed::Monomio const & m1, ed::Monomio const & m2);
-
-	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
+	bool operator!=(double const &x, ed::Monomio const &m1);
+	bool operator!=(ed::Monomio const &m1, double const &x);
 
 	///////////////////////////////////////////////////
 
@@ -45,6 +45,7 @@ namespace ed
 	ed::Monomio & operator+(ed::Monomio const & m);
 
 	// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
+	ed::Monomio & operator-(ed::Monomio const & m);
 
 
 	//////////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ namespace ed
 
 	//////////////////////////////////////////////////////////
 	//! \name Operador binario de la resta
+	ed::Monomio & operator- (ed::Monomio const &m1, ed::Monomio const &m2);
 
 	// COMPLETAR
 
