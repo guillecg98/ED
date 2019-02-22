@@ -21,7 +21,7 @@ namespace ed
 	{
 		bool valorDevuelto = false;
 
-		if( (m1.getGrado() == m2.getGrado()) && ((m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
+		if( (m1.getGrado() == m2.getGrado()) && (std::abs(m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
 		{
 			valorDevuelto = true;
 		}
@@ -35,50 +35,85 @@ namespace ed
 	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
 	bool operator==(ed::Monomio const &m1, double const &x)
 	{
-		if( (m1.getGrado() == 0) && ((m1.getCoeficiente() - x) < COTA_ERROR) )
+		bool valorDevuelto = false;
+
+		if( (m1.getGrado() == 0) && (std::abs(m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
-			return true;
+			valorDevuelto = true;
 		}
-		return false;
+
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() == 0) and (std::abs(m1.getCoeficiente() - x) < COTA_ERROR) and (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 
 	bool operator==(double const &x, ed::Monomio const &m1)
 	{
-		if( (m1.getGrado() == 0) && ((m1.getCoeficiente() - x) < COTA_ERROR) )
+		bool valorDevuelto = false;
+
+		if( (m1.getGrado() == 0) && (std::abs(m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
-			return true;
+			valorDevuelto = true;
 		}
-		return false;
+
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() == 0) and (std::abs(m1.getCoeficiente() - x) < COTA_ERROR) and (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 	// Operadores de desigualdad
 
 	// COMPLETAR
 	bool operator!=(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		if( (m1.getGrado() != m2.getGrado()) || ((m1.getCoeficiente() - m2.getCoeficiente()) > COTA_ERROR) )
+		bool valorDevuelto = false;
+
+		if( (m1.getGrado() != m2.getGrado()) || (std::abs(m1.getCoeficiente() - m2.getCoeficiente()) > COTA_ERROR) )
 		{
-			return true;
+			valorDevuelto = true;
 		}
-		return false;
+
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() != m2.getGrado()) || (std::abs(m1.getCoeficiente() - m2.getCoeficiente()) > COTA_ERROR) || (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 
 	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
 	bool operator!=(double const &x, ed::Monomio const &m1)
 	{
+		bool valorDevuelto = false;
+
 		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
-			return true;
+		 	valorDevuelto = true;
 		}
-		return false;
+
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() != 0) || (std::abs(m1.getCoeficiente() - x) > COTA_ERROR) || (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 
 	bool operator!=(ed::Monomio const &m1, double const &x)
 	{
+		bool valorDevuelto = false;
+
 		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
-			return true;
+		 	valorDevuelto = true;
 		}
-		return false;
+
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() != 0) || (std::abs(m1.getCoeficiente() - x) > COTA_ERROR) || (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 
 	////////////////////////////////////////////////////////////
