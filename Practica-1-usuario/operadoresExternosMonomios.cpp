@@ -19,11 +19,17 @@ namespace ed
 
 	bool operator==(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
+		bool valorDevuelto = false;
+
 		if( (m1.getGrado() == m2.getGrado()) && ((m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
 		{
-			return true;
+			valorDevuelto = true;
 		}
-		return false;
+		#ifndef NDEBUG
+			assert( valorDevuelto == ((m1.getGrado() == m2.getGrado()) and (std::abs(m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) and (valorDevuelto == true)) );
+		#endif
+
+		return valorDevuelto;
 	}
 
 	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
