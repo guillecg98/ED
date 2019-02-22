@@ -330,7 +330,7 @@ void ed::operadoresExternosMonomios()
 	std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Monomio y los operadores externos de dicha clase" << std::endl << std::endl;
 
 
-/*
+
 	double x;
 
 	// Constructor por defecto
@@ -561,7 +561,7 @@ void ed::operadoresExternosMonomios()
 
 
 	std::cout << std::endl;
-*/
+
 
 	return;
 }

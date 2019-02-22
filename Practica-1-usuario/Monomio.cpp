@@ -110,7 +110,7 @@ ed::Monomio & ed::Monomio::operator*=(ed::Monomio const &m)
 ed::Monomio & ed::Monomio::operator/=(ed::Monomio const &m)
 {
 	#ifndef NDEUBUG
-		assert( this->getGrado() > m.getGrado() );
+		assert( this->getGrado() >= m.getGrado() );
 		assert( m.getCoeficiente() != 0.0 );
 	#endif
 

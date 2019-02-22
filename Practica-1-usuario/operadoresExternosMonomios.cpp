@@ -19,7 +19,7 @@ namespace ed
 
 	bool operator==(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
-		if( (m1.getGrado() == m2.getGrado()) and ((m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
+		if( (m1.getGrado() == m2.getGrado()) && ((m1.getCoeficiente() - m2.getCoeficiente()) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -29,7 +29,7 @@ namespace ed
 	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
 	bool operator==(ed::Monomio const &m1, double const &x)
 	{
-		if( (m1.getGrado() == 0) and ((m1.getCoeficiente() - x) < COTA_ERROR) )
+		if( (m1.getGrado() == 0) && ((m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -38,7 +38,7 @@ namespace ed
 
 	bool operator==(double const &x, ed::Monomio const &m1)
 	{
-		if( (m1.getGrado() == 0) and ((m1.getCoeficiente() - x) < COTA_ERROR) )
+		if( (m1.getGrado() == 0) && ((m1.getCoeficiente() - x) < COTA_ERROR) )
 		{
 			return true;
 		}
@@ -274,8 +274,13 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 	istream &operator>>(istream &stream, ed::Monomio &m)
 	{
 		// COMPLETAR
-
-   		// Se devuelve el flujo de entrada
+		double coeficient;
+		int grade;
+		stream >> coeficient;
+		stream >> grade;
+		m.setCoeficiente(coeficient);
+		m.setGrado(grade);
+		// Se devuelve el flujo de salida
 		return stream;
 	}
 
@@ -284,8 +289,8 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 	ostream &operator<<(ostream &stream, ed::Monomio const &m)
 	{
 		// COMPLETAR
+		stream << m.getCoeficiente() << " " << m.getGrado();
 
-		// Se devuelve el flujo de salida
 		return stream;
 	}
 
