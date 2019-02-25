@@ -117,6 +117,9 @@ class Monomio
 		Monomio & operator*=(double const &x);
 		Monomio & operator/=(double const &x);
 
+		//FUNCION AÑADIDA
+		Monomio & operator^=(int potencia);
+
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

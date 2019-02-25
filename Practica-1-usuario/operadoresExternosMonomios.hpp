@@ -88,6 +88,7 @@ namespace ed
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	 ostream &operator<<(ostream &stream, ed::Monomio const &m);
 
+
 }  // Fin de namespace ed.
 
 #endif // _OperadoresExternosMonomios_HPP_

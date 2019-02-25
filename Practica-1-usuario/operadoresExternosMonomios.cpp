@@ -88,7 +88,7 @@ namespace ed
 	{
 		bool valorDevuelto = false;
 
-		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
+		if( (m1.getGrado() != 0) || (std::abs(m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
 		 	valorDevuelto = true;
 		}
@@ -104,7 +104,7 @@ namespace ed
 	{
 		bool valorDevuelto = false;
 
-		if( (m1.getGrado() != 0) || ((m1.getCoeficiente() - x) > COTA_ERROR) )
+		if( (m1.getGrado() != 0) || (std::abs(m1.getCoeficiente() - x) > COTA_ERROR) )
 		{
 		 	valorDevuelto = true;
 		}
@@ -319,6 +319,11 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 		int grade;
 		stream >> coeficient;
 		stream >> grade;
+		if( grade < 0 )
+		{
+			std::cout<<"No se debe introducir un grado menor que 0\n";
+			exit (-1);
+		}
 		m.setCoeficiente(coeficient);
 		m.setGrado(grade);
 		// Se devuelve el flujo de salida
@@ -334,6 +339,5 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 
 		return stream;
 	}
-
 
 }  // namespace ed

@@ -163,6 +163,26 @@ ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLAR
 	return *this;
 }
 
+ed::Monomio & ed::Monomio::operator^=(int potencia)
+{
+	#ifndef NDEBUG
+		assert( grado >= 0 );
+	#endif
+
+	int valorG = this->getGrado();
+	double valorC = this->getCoeficiente();
+
+	this->setGrado(valorG*potencia);
+	this->setCoeficiente(std::pow(valorC,potencia));
+
+	#ifndef NDEBUG
+		assert( this->getGrado() == (valorG * potencia) );
+		assert( std::abs(this->getCoeficiente() - std::pow(valorC,potencia)) < COTA_ERROR );
+	#endif
+
+	return *this;
+}
+
 ///////////////////////////////////////////////////////////////////////
 
 // Funciones lectura y escritura de la clase Monomio
@@ -193,15 +213,15 @@ void ed::Monomio::escribirMonomio()
 		switch (this->getGrado())
 		{
 			case 0:
-				std::cout<<this->getCoeficiente()<<"\n";
+				std::cout<<this->getCoeficiente();
 			break;
 
 			case 1:
-				std::cout<<this->getCoeficiente()<<"x\n";
+				std::cout<<this->getCoeficiente()<<"x";
 			break;
 
 			default:
-				std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado()<<"\n";
+				std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado();
 		}
 	}else {
 		if(this->getCoeficiente() < 0)
@@ -209,15 +229,15 @@ void ed::Monomio::escribirMonomio()
 			switch (this->getGrado())
 			{
 				case 0:
-					std::cout<<"-"<<this->getCoeficiente()<<"\n";
+					std::cout<<"-"<<this->getCoeficiente();
 				break;
 
 				case 1:
-					std::cout<<"-"<<this->getCoeficiente()<<"x\n";
+					std::cout<<"-"<<this->getCoeficiente()<<"x";
 				break;
 
 				default:
-					std::cout<<"-"<<this->getCoeficiente()<<"x^"<<this->getGrado()<<"\n";
+					std::cout<<"-"<<this->getCoeficiente()<<"x^"<<this->getGrado();
 			}
 		}else {
 			std::cout<<"Error: El coeficiente es 0\n";
