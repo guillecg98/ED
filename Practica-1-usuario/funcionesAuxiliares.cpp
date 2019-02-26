@@ -1,8 +1,8 @@
 /*!
   \file   funcionesAuxiliares.cpp
   \brief  Código de las funciones auxiliares para el programa principal de la práctica 1
-  \author
-  \date
+  \author Guillermo Cosano Galiot
+  \date 27-02-2019
 */
 
 // Para los flujos de entrada y salida
@@ -349,6 +349,10 @@ void ed::testMonomio()
   m3^=g;
   m3.escribirMonomio();
   std::cout<<"\n";
+
+  //
+  // Pausa
+  std::cin.ignore();
 
 
 	// Fin
