@@ -1,8 +1,8 @@
 /*!
   \file   macros.hpp
   \brief  Macros para la pantalla
-  \author 
-  \date   
+  \author Guillermo Cosano Galiot
+  \date   27-02-2019
   \note  http://isthe.com/chongo/tech/comp/ansi_escapes.html
 */
 
@@ -101,4 +101,3 @@
 
 
 #endif  // _MACROS_HPP_
-

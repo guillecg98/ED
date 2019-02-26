@@ -66,7 +66,6 @@ namespace ed
 	}
 	// Operadores de desigualdad
 
-	// COMPLETAR
 	bool operator!=(ed::Monomio const & m1, ed::Monomio const & m2)
 	{
 		bool valorDevuelto = false;

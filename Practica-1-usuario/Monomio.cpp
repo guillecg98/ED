@@ -49,13 +49,11 @@ ed::Monomio & ed::Monomio::operator=(double const &x)
 
 // Operadores aritméticos y asignación
 
-// COMPLETAR
-
 ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 {
 	// COMPLETAR
 	#ifndef NDEBUG
-		assert( std::abs(m.getGrado()-this->getGrado()) < COTA_ERROR );
+		assert( this->getGrado() == m.getGrado() );
 	#endif
 
 	int valorG = this->getGrado();
@@ -65,7 +63,7 @@ ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC + m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+		assert( this->getGrado() == valorG );
 	#endif
 
 	// Se devuelve el objeto actual
@@ -75,7 +73,7 @@ ed::Monomio & ed::Monomio::operator+=(ed::Monomio const &m)
 ed::Monomio & ed::Monomio::operator-=(ed::Monomio const &m)
 {
 	#ifndef NDEBUG
-		assert( std::abs(m.getGrado()-this->getGrado()) < COTA_ERROR );
+		assert( this->getGrado() == m.getGrado() );
 	#endif
 
 	int valorG = this->getGrado();
@@ -85,7 +83,7 @@ ed::Monomio & ed::Monomio::operator-=(ed::Monomio const &m)
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC - m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+		assert( this->getGrado() == valorG );
 	#endif
 
 	return *this;
@@ -101,7 +99,7 @@ ed::Monomio & ed::Monomio::operator*=(ed::Monomio const &m)
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC * m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - (valorG + m.getGrado())) < COTA_ERROR );
+		assert( this->getGrado() == (valorG + m.getGrado()) );
 	#endif
 
 	return *this;
@@ -122,7 +120,7 @@ ed::Monomio & ed::Monomio::operator/=(ed::Monomio const &m)
 
 	#ifndef NDEUBUG
 		assert( std::abs(this->getCoeficiente() - (valorC / m.getCoeficiente())) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - (valorG - m.getGrado())) < COTA_ERROR );
+		assert( this->getGrado() == (valorG - m.getGrado()) );
 	#endif
 
 	return *this;
@@ -138,7 +136,7 @@ ed::Monomio & ed::Monomio::operator*=(double const &x)
 
 	#ifndef NDEUBUG
 		assert( std::abs(this->getCoeficiente() - (valorC * x)) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+		assert( this->getGrado() == valorG );
 	#endif
 
 	return *this;
@@ -157,7 +155,7 @@ ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLAR
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - (valorC / x)) < COTA_ERROR );
-		assert( std::abs(this->getGrado() - valorG) < COTA_ERROR );
+		assert( this->getGrado() == valorG );
 	#endif
 
 	return *this;
@@ -166,7 +164,7 @@ ed::Monomio & ed::Monomio::operator/=(double const &x) //DUDA: POR QUE SE DECLAR
 ed::Monomio & ed::Monomio::operator^=(int potencia)
 {
 	#ifndef NDEBUG
-		assert( grado >= 0 );
+		assert( potencia >= 0 );
 	#endif
 
 	int valorG = this->getGrado();
