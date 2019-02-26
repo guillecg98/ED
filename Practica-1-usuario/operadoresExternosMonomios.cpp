@@ -318,10 +318,11 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 		int grade;
 		stream >> coeficient;
 		stream >> grade;
-		if( grade < 0 )
+		while( grade < 0 )
 		{
 			std::cout<<"No se debe introducir un grado menor que 0\n";
-			exit (-1);
+			std::cout<<"grado: ";
+			stream >> grade;
 		}
 		m.setCoeficiente(coeficient);
 		m.setGrado(grade);
