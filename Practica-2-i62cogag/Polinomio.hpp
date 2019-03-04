@@ -28,18 +28,48 @@ class Polinomio: public ed::PolinomioInterfaz
 
   //! \name Atributos privados de la clase Polinomio
    private:
-
-  // COMPLETAR
-
+     std::vector <Monomio> vector;
    //! \name Funciones o métodos públicos de la clase Polinomio
    public:
 
 	//! \name Constructores de la clase Polinomio
+    inline Polinomio()
+    {
+      Monomio m;
+      this->vector.push_back(m);
+      #ifndef NDEBUG
+        assert( this->esNulo() == true );
+      #endif
+    }
 
-  // COMPLETAR
+    inline Polinomio(const Polinomio &p)
+    {
+      this->vector = p.vector;
+      #ifndef NDEBUG
+        for(int i = 0; i < this->getNumeroMonomios(); i++)
+        {
+          assert( (this->vector[i].getGrado() == p.vector[i].getGrado()) and (std::abs(this->vector[i].getCoeficiente() - p.vector[i].getCoeficiente()) < COTA_ERROR) );
+        }
+      #endif
+    }
 
   //! \name Observadores: funciones de consulta de la clase Polinomio
+    inline bool esNulo()
+    {
+      for(int i = 0; i < this->getNumeroMonomios(); i++)
+      {
+        if( (std::abs(this->vector[i].getCoeficiente() - 0.0) < COTA_ERROR) || (this->vector[i].getGrado() != 0) )
+        {
+          return false;
+        }
+      }
+      return true;
+    }
 
+    inline int getNumeroMonomios()
+    {
+      return this->vector.size();
+    }
 	// COMPLETAR
 
 
