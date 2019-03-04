@@ -16,8 +16,11 @@
 ed::Monomio & ed::Monomio::operator=(ed::Monomio const &m)
 {
 	// COMPLETAR
-	this->setCoeficiente(m.getCoeficiente());
-	this->setGrado(m.getGrado());
+	if (&m != this)
+	{
+		this->setCoeficiente(m.getCoeficiente());
+		this->setGrado(m.getGrado());
+	}
 
 	#ifndef NDEBUG
 		assert( std::abs(this->getCoeficiente() - m.getCoeficiente()) < COTA_ERROR );
@@ -215,11 +218,21 @@ void ed::Monomio::escribirMonomio()
 			break;
 
 			case 1:
-				std::cout<<this->getCoeficiente()<<"x";
+				if(this->getCoeficiente() == 1)
+				{
+					std::cout<<"x";
+				}else{
+					std::cout<<this->getCoeficiente()<<"x";
+				}
 			break;
 
 			default:
-				std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado();
+				if(this->getCoeficiente() == 1)
+				{
+					std::cout<<"x^"<<this->getGrado();
+				}else{
+					std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado();
+				}
 		}
 	}else {
 		if(this->getCoeficiente() < 0)
@@ -231,11 +244,21 @@ void ed::Monomio::escribirMonomio()
 				break;
 
 				case 1:
-					std::cout<<"-"<<this->getCoeficiente()<<"x";
+				if(this->getCoeficiente() == 1)
+				{
+					std::cout<<"-x";
+				}else{
+					std::cout<<this->getCoeficiente()<<"-x";
+				}
 				break;
 
 				default:
-					std::cout<<"-"<<this->getCoeficiente()<<"x^"<<this->getGrado();
+				if(this->getCoeficiente() == 1)
+				{
+					std::cout<<"-x^"<<this->getGrado();
+				}else{
+					std::cout<<this->getCoeficiente()<<"-x^"<<this->getGrado();
+				}
 			}
 		}else {
 			std::cout<<"Error: El coeficiente es 0\n";
