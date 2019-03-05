@@ -54,7 +54,7 @@ class Polinomio: public ed::PolinomioInterfaz
     }
 
   //! \name Observadores: funciones de consulta de la clase Polinomio
-    inline bool esNulo()
+    inline bool esNulo() const
     {
       for(int i = 0; i < this->getNumeroMonomios(); i++)
       {
@@ -66,9 +66,57 @@ class Polinomio: public ed::PolinomioInterfaz
       return true;
     }
 
-    inline int getNumeroMonomios()
+    inline int getGrado() const
+    {
+      return this->vector.front().getGrado(); //devuelve el grado del primer elemento que deberia ser el de mayor grado cuando esté ordenado
+    }
+
+    inline int getNumeroMonomios() const
     {
       return this->vector.size();
+    }
+
+    inline bool existeMonomio(int n) const
+    {
+      #ifndef NDEBUG
+        assert( this->esNulo() == false );
+      #endif
+
+      for(int i = 0; i < this->getNumeroMonomios(); i++)
+      {
+        if(this->vector[i].getGrado() == n)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    inline int getPosicion(int n) const
+    {
+      #ifndef NDEBUG
+        assert( this->esNulo() == false );
+        assert( this->existeMonomio() == true );
+      #endif
+
+      for(int i = 0; i < this->getNumeroMonomios(); i++)
+      {
+        if(this->vector[i].getGrado() == n)
+        {
+          return i;
+        }
+      }
+      return NULL;
+    }
+
+    inline Monomio getMonomio(int n) const
+    {
+      #ifndef NDEBUG
+        assert( this->esNulo() == false );
+        assert( this->getPosicion() == NULL );
+      #endif
+
+      return this->vector[this->getPosicion()];
     }
 	// COMPLETAR
 
