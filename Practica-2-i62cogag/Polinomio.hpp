@@ -48,7 +48,7 @@ class Polinomio: public ed::PolinomioInterfaz
       #ifndef NDEBUG
         for(int i = 0; i < this->getNumeroMonomios(); i++)
         {
-          assert( (this->vector[i].getGrado() == p.vector[i].getGrado()) and (std::abs(this->vector[i].getCoeficiente() - p.vector[i].getCoeficiente()) < COTA_ERROR) );
+          assert( this->vector[i] == p.vector[i] );
         }
       #endif
     }
@@ -92,7 +92,7 @@ class Polinomio: public ed::PolinomioInterfaz
       return false;
     }
 
-    inline int getPosicion(int n) const
+  /*  inline int getPosicion(int n) const
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
@@ -107,9 +107,9 @@ class Polinomio: public ed::PolinomioInterfaz
         }
       }
       return NULL;
-    }
-
-    inline Monomio getMonomio(int n) const
+    }*/
+/*
+  inline Monomio getMonomio(int n) const
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
@@ -117,7 +117,7 @@ class Polinomio: public ed::PolinomioInterfaz
       #endif
 
       return this->vector[this->getPosicion()];
-    }
+    }*/
 	// COMPLETAR
 
 
