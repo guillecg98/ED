@@ -16,7 +16,7 @@
 #include <cmath>
 
 #include "PolinomioInterfaz.hpp"
-#include "Monomio.hpp"
+#include "operadoresExternosMonomios.hpp"
 
 
 // Se incluye la clase Polinomio dentro del espacio de nombre de la asigantura: ed
@@ -48,7 +48,7 @@ class Polinomio: public ed::PolinomioInterfaz
       #ifndef NDEBUG
         for(int i = 0; i < this->getNumeroMonomios(); i++)
         {
-          assert( this->vector[i] == p.vector[i] );
+          assert( (this->vector[i] == p.vector[i]) );
         }
       #endif
     }
@@ -58,12 +58,12 @@ class Polinomio: public ed::PolinomioInterfaz
     {
       for(int i = 0; i < this->getNumeroMonomios(); i++)
       {
-        if( (std::abs(this->vector[i].getCoeficiente() - 0.0) < COTA_ERROR) || (this->vector[i].getGrado() != 0) )
+        if( this->vector[i] == 0.0 )
         {
-          return false;
+          return true;
         }
       }
-      return true;
+      return false;
     }
 
     inline int getGrado() const
@@ -92,11 +92,11 @@ class Polinomio: public ed::PolinomioInterfaz
       return false;
     }
 
-  /*  inline int getPosicion(int n) const
+    inline int getPosicion(int n) const
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
-        assert( this->existeMonomio() == true );
+        assert( this->existeMonomio(n) == true );
       #endif
 
       for(int i = 0; i < this->getNumeroMonomios(); i++)
@@ -106,23 +106,41 @@ class Polinomio: public ed::PolinomioInterfaz
           return i;
         }
       }
-      return NULL;
-    }*/
-/*
-  inline Monomio getMonomio(int n) const
+      return 0;
+    }
+
+    inline Monomio getMonomio(int n) const
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
-        assert( this->getPosicion() == NULL );
+        assert( this->getPosicion(n) == true );
       #endif
 
-      return this->vector[this->getPosicion()];
-    }*/
+      return this->vector[this->getPosicion(n)];
+    }
+
+    //funcion extra: comprueba si un polinomio está ordenado
+    inline bool isOrdered() const
+    {
+      #ifndef NDEBUG
+        assert( this->esNulo() == false );
+      #endif
+
+      for( int i = 0; i < this->getNumeroMonomios()-1; i++)
+      {
+        if( this->vector[i].getGrado() <= this->vector[i+1].getGrado() )
+        {
+          return false;
+        }
+      }
+      return true;
+    }
 	// COMPLETAR
 
 
 	//! \name Funciones de modificación de la clase Polinomio
-
+  //funcion extra: ordena un polinomio desordenado y suma aquellos monomios con mismo grado
+  void ordenaPolinomio();
 	// COMPLETAR
 
 

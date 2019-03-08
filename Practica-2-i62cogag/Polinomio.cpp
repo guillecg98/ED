@@ -13,7 +13,35 @@
 
 // COMPLETAR
 
+void ed::Polinomio::ordenaPolinomio()
+{
+	#ifndef NDEBUG
+		assert( this->esNulo() == false );
+		assert( this->isOrdered() == false );
+	#endif
 
+	Monomio aux;
+
+	//bucle para ordenar
+	for( int i = 0; i < this->getNumeroMonomios()-1; i++)
+	{
+		if(this->vector[i].getGrado() < this->vector[i+1].getGrado())
+		{
+			aux.setGrado(this->vector[i].getGrado());
+			this->vector[i].setGrado(this->vector[i+1].getGrado());
+			this->vector[i+1].setGrado(aux.getGrado());
+		}
+	}
+
+	//bucle que suma aquellos monomios con mismo grado
+	for( int i = 0; i < this->getNumeroMonomios() -1; i++)
+	{
+		if(this->vector[i].getGrado() == this->vector[i+1].getGrado())
+		{
+			this->vector[i] += this->vector[i+1];
+		}
+	}
+}
 /////////////////////////////////////////////////////////////
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
