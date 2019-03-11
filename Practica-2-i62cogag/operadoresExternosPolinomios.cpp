@@ -18,10 +18,14 @@ namespace ed
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-	// COMPLETAR Y MODIFICAR
-
-	// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-		return false;
+	for(int i = 0; i < p1.getNumeroMonomios(); i++)
+	{
+		if(p1.getMonomio(i) != p2.vector[i])
+		{
+				return false;
+		}
+	}
+		return true;
 }
 
 // COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
