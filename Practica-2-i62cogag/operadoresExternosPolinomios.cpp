@@ -18,9 +18,13 @@ namespace ed
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
+	#ifndef NDEBUG
+		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
+	#endif
+
 	for(int i = 0; i < p1.getNumeroMonomios(); i++)
 	{
-		if(p1.getMonomio(i) != p2.vector[i])
+		if(p1.obtieneMonomio(i) != p2.obtieneMonomio(i))
 		{
 				return false;
 		}
@@ -37,9 +41,20 @@ bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
 	// COMPLETAR Y MODIFICAR
+	#ifndef NDEBUG
+		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
+	#endif
+
+	for(int i = 0; i < p1.getNumeroMonomios(); i++)
+	{
+		if(p1.obtieneMonomio(i) != p2.obtieneMonomio(i))
+		{
+				return true;
+		}
+	}
 
 	// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-	return true;
+	return false;
 }
 
 // COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
