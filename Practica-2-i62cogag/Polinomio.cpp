@@ -46,9 +46,9 @@ void ed::Polinomio::ordenaPolinomio()
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 {
-	/*#ifndef NDEBUG
+	#ifndef NDEBUG
 		assert( this->vector != p.vector );
-	#endif*/
+	#endif
 
 	for( int i = 0; i < this->getNumeroMonomios(); i++)
 	{
@@ -56,7 +56,7 @@ ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 	}
 	// Se devuelve el objeto actual
 	#ifndef NDEBUG
-		assert( *this == &p );
+		assert( this->vector == p.vector );
 	#endif
 
 	return *this;

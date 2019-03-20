@@ -119,6 +119,17 @@ class Polinomio: public ed::PolinomioInterfaz
       return this->vector[this->getPosicion(n)];
     }
 
+    //Funcion que obtiene el monomio en cuestion pasada una posicion del polinomio concreta
+    inline Monomio obtieneMonomio(int n) const
+    {
+      #ifndef NDEBUG
+        assert( this->esNulo() == false );
+        assert( this->existeMonomio(n) == true );
+      #endif
+
+      return this->vector[n];
+    }
+
     //funcion extra: comprueba si un polinomio está ordenado
     inline bool isOrdered() const
     {
