@@ -35,6 +35,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	//! \name Constructores de la clase Polinomio
     inline Polinomio()
     {
+      this->vector.clear();
       Monomio m;
       this->vector.push_back(m);
       #ifndef NDEBUG
@@ -56,12 +57,9 @@ class Polinomio: public ed::PolinomioInterfaz
   //! \name Observadores: funciones de consulta de la clase Polinomio
     inline bool esNulo() const
     {
-      for(int i = 0; i < this->getNumeroMonomios(); i++)
+      if( (this->getNumeroMonomios() == 1) && (this->vector[0] == 0.0))
       {
-        if( this->vector[i] == 0.0 )
-        {
           return true;
-        }
       }
       return false;
     }
@@ -92,31 +90,22 @@ class Polinomio: public ed::PolinomioInterfaz
       return false;
     }
 
-    inline int getPosicion(int n) const
+    inline Monomio & getMonomio(int n)
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
-        assert( this->existeMonomio(n) == true );
       #endif
+
+      ed::Monomio *m = new ed::Monomio();
 
       for(int i = 0; i < this->getNumeroMonomios(); i++)
       {
         if(this->vector[i].getGrado() == n)
         {
-          return i;
+          *m = this->vector[i];
         }
       }
-      return 0;
-    }
-
-    inline Monomio getMonomio(int n) const
-    {
-      #ifndef NDEBUG
-        assert( this->esNulo() == false );
-        assert( this->getPosicion(n) == true );
-      #endif
-
-      return this->vector[this->getPosicion(n)];
+      return *m;
     }
 
     //Funcion que obtiene el monomio en cuestion pasada una posicion del polinomio concreta
@@ -150,7 +139,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 
 	//! \name Funciones de modificación de la clase Polinomio
-  //funcion extra: ordena un polinomio desordenado y suma aquellos monomios con mismo grado
+  //funcion extra: ordena un polinomio desordenado y agrupa aquellos monomios con mismo grado
   void ordenaPolinomio();
 	// COMPLETAR
 
@@ -172,9 +161,12 @@ class Polinomio: public ed::PolinomioInterfaz
 
 		// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator+=(Polinomio const &p);
+  Polinomio & operator+=(Monomio const &m);
+  Polinomio & operator+=(double const &x);
 
-
-	// COMPLETAR EL RESTO DE OPERADORES
+  Polinomio & operator-=(Polinomio const &p);
+  Polinomio & operator-=(Monomio const &m);
+  Polinomio & operator-=(double const &x);
 
 
   /////////////////////////////////////////////////////////////////////////////////////

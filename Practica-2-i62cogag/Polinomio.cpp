@@ -39,6 +39,7 @@ void ed::Polinomio::ordenaPolinomio()
 		if(this->vector[i].getGrado() == this->vector[i+1].getGrado())
 		{
 			this->vector[i] += this->vector[i+1];
+			this->vector.erase(this->vector.begin()+i+1);
 		}
 	}
 }
@@ -46,37 +47,43 @@ void ed::Polinomio::ordenaPolinomio()
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 {
-	#ifndef NDEBUG
-		assert( this->vector != p.vector );
-	#endif
-
-	for( int i = 0; i < this->getNumeroMonomios(); i++)
+	if(&p != this)
 	{
-		this->vector[i] = p.vector[i];
+		this->vector.clear();
+		this->vector = p.vector;
 	}
 	// Se devuelve el objeto actual
 	#ifndef NDEBUG
-		assert( this->vector == p.vector );
+		assert( this == &p );
 	#endif
 
 	return *this;
 }
 
-
 ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m)
 {
-	// COMPLETAR
+	this->vector.clear();
+	this->vector.push_back(m);
 
-	// Se devuelve el objeto actual
+	#ifndef NDEBUG
+		assert( this->vector.front() == m );
+	#endif
+
 	return *this;
 }
-
 
 ed::Polinomio & ed::Polinomio::operator=(double const &x)
 {
 	// COMPLETAR
-
+	this->vector.clear();
+	Monomio m;
+	m = x;
+	this->vector.push_back(m);
 	// Se devuelve el objeto actual
+	#ifndef NDEBUG
+		assert( this->vector.front() == x );
+	#endif
+
 	return *this;
 }
 
@@ -84,14 +91,58 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x)
 
 ed::Polinomio & ed::Polinomio::operator+=(ed::Polinomio const &p)
 {
-	// COMPLETAR
-
+	for( int i = 0; i < p.getNumeroMonomios(); i++)
+	{
+		this->vector.push_back(p.vector[i]);
+	}
+	this->ordenaPolinomio();
 	// Se devuelve el objeto actual
 	return *this;
 }
 
 // COMPLETAR EL RESTO DE OPERADORES
+ed::Polinomio & ed::Polinomio::operator+=(Monomio const &m)
+{
+	this->vector.push_back(m);
+	this->ordenaPolinomio();
+	return *this;
+}
 
+ed::Polinomio & ed::Polinomio::operator+=(double const &x)
+{
+	Monomio m;
+	m = x;
+	this->vector.push_back(m);
+	this->ordenaPolinomio();
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p)
+{
+	for( int i = 0; i < p.getNumeroMonomios(); i++)
+	{
+		this->vector.push_back(-p.vector[i]);
+	}
+	this->ordenaPolinomio();
+	// Se devuelve el objeto actual
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(Monomio const &m)
+{
+	this->vector.push_back(-m);
+	this->ordenaPolinomio();
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(double const &x)
+{
+	Monomio m;
+	m = x;
+	this->vector.push_back(-m);
+	this->ordenaPolinomio();
+	return *this;
+}
 
 
 ///////////////////////////////////////////////////////////////////////
