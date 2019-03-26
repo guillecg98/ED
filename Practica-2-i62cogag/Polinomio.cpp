@@ -51,7 +51,7 @@ ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 	{
 		this->vector.clear();
 		this->vector = p.vector;
-	}
+	}											/*	SI ESTE METODO FALLA: PROBAR A IGUALARLO ITEM A ITEM RECORRIENDO EL POLINOMIO P	 */
 	// Se devuelve el objeto actual
 	#ifndef NDEBUG
 		assert( this == &p );
@@ -144,16 +144,164 @@ ed::Polinomio & ed::Polinomio::operator-=(double const &x)
 	return *this;
 }
 
+ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p)
+{
+	ed::Polinomio *nuevo = new ed::Polinomio();
+	Monomio m;
 
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		for(int j = 0; j < p.getNumeroMonomios(); j++)
+		{
+			m = this->vector[i] * p.vector[j];
+			nuevo->vector.push_back(m);
+		}
+	}
+	nuevo->ordenaPolinomio();
+
+	return *nuevo;
+}
+
+ed::Polinomio & ed::Polinomio::operator*=(Monomio const &m)
+{
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		this->vector[i] *= m;
+	}
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator*=(double const &x)
+{
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		this->vector[i] *= x;
+	}
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
+{
+	#ifndef NDEBUG
+		assert( this->getGrado() >= p.getGrado() );
+		assert( p.esNulo() == false );
+	#endif
+
+	ed::Polinomio *nuevo = new ed::Polinomio();
+	Monomio m;
+
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		for(int j = 0; j < p.getNumeroMonomios(); j++)
+		{
+			m = this->vector[i] / p.vector[j];
+			nuevo->vector.push_back(m);
+		}
+	}
+	nuevo->ordenaPolinomio();
+
+	return *nuevo;
+}
+
+ed::Polinomio & ed::Polinomio::operator/=(Monomio const &m)
+{
+	#ifndef NDEBUG
+		assert( m.getGrado() >= this->getGrado() );
+		assert( this->esNulo() == false );
+	#endif
+
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		this->vector[i] /= m;
+	}
+	return *this;
+}
+
+ed::Polinomio & ed::Polinomio::operator/=(double const &x)
+{
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		this->vector[i] /= x;
+	}
+	return *this;
+}
 ///////////////////////////////////////////////////////////////////////
 
 // Funciones lectura y escritura de la clase Polinomio
+void ed::Polinomio::leerPolinomio()
+{
+	int tam,valorG;
+	double valorC;
+	std::cout<<"Numero de Monomios del Polinomio:";
+	std::cin>>tam;
+	Monomio m;
 
-// COMPLETAR
+	for(int i = 0; i < tam; i++)
+	{
+		std::cout<<"Monomio "<<i<<"\n";
+		std::cout<<"Coeficiente: ";
+		std::cin>>valorC;
+		std::cout<<"Grado: ";
+		std::cin>>valorG;
+		for(int j = 0; j < tam; j++)
+		{
+			if( (this->vector[j].getGrado() == valorG) || (valorG < 0) )
+			{
+				std::cout<<"No puedes introducir dos monomios con el mismo grado en un mismo Polinomio ni un grado negativo, se ha asignado un valor de 0 al ultimo grado introduzido\n";
+				valorG = 0;
+			}
+		}
+		m.setCoeficiente(valorC);
+		m.setGrado(valorG);
+		this->vector.push_back(m);
+	}
+	std::cout<<"Se ha creado el Polinomio!\n";
+}
 
-
-///////////////////////////////////////////////////////////////////////
-
-// Funciones auxiliares de la clase Polinomio
-
-// COMPLETAR
+void ed::Polinomio::escribirPolinomio()
+{
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		if(this->vector[i].getCoeficiente() == 1)
+		{
+			if(this->vector[i].getGrado() == 0)
+			{
+				std::cout<<this->vector[i].getCoeficiente(); //imprime 1
+			} else{
+				if(this->vector[i].getGrado() == 1)
+				{
+					std::cout<<"x";//imprime 1X^1
+				} else{
+					std::cout<<"x^"<<this->vector[i].getGrado();//imprime 1X^N
+				}
+			}
+		} else{
+			if(this->vector[i].getCoeficiente() == -1)
+			{
+				if(this->vector[i].getGrado() == 0)
+				{
+					std::cout<<"-"<<this->vector[i].getCoeficiente(); //imprime -1
+				} else{
+					if(this->vector[i].getGrado() == 1)
+					{
+						std::cout<<"-x";//imprime -1X^1
+					} else{
+						std::cout<<"-x^"<<this->vector[i].getGrado();//imprime -1X^N
+					}
+				}
+			} else{
+				if(this->vector[i].getGrado() == 0)
+				{
+					std::cout<<this->vector[i].getCoeficiente();
+				} else{
+					if(this->vector[i].getGrado() == 1)
+					{
+						std::cout<<this->vector[i].getCoeficiente()<<"x";
+					} else{
+							std::cout<<this->vector[i].getCoeficiente()<<"x^"<<this->vector[i].getGrado();
+					}
+				}
+			}
+		}
+	}
+}

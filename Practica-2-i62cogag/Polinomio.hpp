@@ -135,7 +135,7 @@ class Polinomio: public ed::PolinomioInterfaz
       }
       return true;
     }
-	// COMPLETAR
+
 
 
 	//! \name Funciones de modificación de la clase Polinomio
@@ -143,23 +143,14 @@ class Polinomio: public ed::PolinomioInterfaz
   void ordenaPolinomio();
 	// COMPLETAR
 
-
  	////////////////////////////////////////////////////////////////
 
-   //! \name Operadores de la clase Polinomio
-
-	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
+  //! \name Operadores de la clase Polinomio
 	Polinomio & operator=(Polinomio const &p);
-
-	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator=(Monomio const &m);
-
-	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator=(double const &x);
 
   // Operadores aritméticos y asignación
-
-		// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator+=(Polinomio const &p);
   Polinomio & operator+=(Monomio const &m);
   Polinomio & operator+=(double const &x);
@@ -168,12 +159,20 @@ class Polinomio: public ed::PolinomioInterfaz
   Polinomio & operator-=(Monomio const &m);
   Polinomio & operator-=(double const &x);
 
+  Polinomio & operator*=(Polinomio const &p);
+  Polinomio & operator*=(Monomio const &m);
+  Polinomio & operator*=(double const &x);
+
+  Polinomio & operator/=(Polinomio const &p);
+  Polinomio & operator/=(Monomio const &m);
+  Polinomio & operator/=(double const &x);
+
 
   /////////////////////////////////////////////////////////////////////////////////////
 
 	//! \name Funciones lectura y escritura de la clase Polinomio
-
-	// COMPLETAR
+  void leerPolinomio();
+  void escribirPolinomio();
 
 
 	///////////////////////////////////////////////////////////////////////
