@@ -209,59 +209,45 @@ void ed::Monomio::leerMonomio()
 
 void ed::Monomio::escribirMonomio()
 {
-	if(this->getCoeficiente() > 0)
+	if(this->getCoeficiente() == 1)
 	{
-		switch (this->getGrado())
+		if(this->getGrado() == 0)
 		{
-			case 0:
-				std::cout<<this->getCoeficiente();
-			break;
-
-			case 1:
-				if(this->getCoeficiente() == 1)
-				{
-					std::cout<<"x";
-				}else{
-					std::cout<<this->getCoeficiente()<<"x";
-				}
-			break;
-
-			default:
-				if(this->getCoeficiente() == 1)
-				{
-					std::cout<<"x^"<<this->getGrado();
-				}else{
-					std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado();
-				}
-		}
-	}else {
-		if(this->getCoeficiente() < 0)
-		{
-			switch (this->getGrado())
+			std::cout<<this->getCoeficiente(); //imprime 1
+		} else{
+			if(this->getGrado() == 1)
 			{
-				case 0:
-					std::cout<<"-"<<this->getCoeficiente();
-				break;
-
-				case 1:
-				if(this->getCoeficiente() == 1)
+				std::cout<<"x";//imprime 1X^1
+			} else{
+				std::cout<<"x^"<<this->getGrado();//imprime 1X^N
+			}
+		}
+	} else{
+		if(this->getCoeficiente() == -1)
+		{
+			if(this->getGrado() == 0)
+			{
+				std::cout<<"-"<<this->getCoeficiente(); //imprime -1
+			} else{
+				if(this->getGrado() == 1)
 				{
-					std::cout<<"-x";
-				}else{
-					std::cout<<this->getCoeficiente()<<"-x";
-				}
-				break;
-
-				default:
-				if(this->getCoeficiente() == 1)
-				{
-					std::cout<<"-x^"<<this->getGrado();
-				}else{
-					std::cout<<this->getCoeficiente()<<"-x^"<<this->getGrado();
+					std::cout<<"-x";//imprime -1X^1
+				} else{
+					std::cout<<"-x^"<<this->getGrado();//imprime -1X^N
 				}
 			}
-		}else {
-			std::cout<<"Error: El coeficiente es 0\n";
+		} else{
+			if(this->getGrado() == 0)
+			{
+				std::cout<<this->getCoeficiente();
+			} else{
+				if(this->getGrado() == 1)
+				{
+					std::cout<<this->getCoeficiente()<<"x";
+				} else{
+						std::cout<<this->getCoeficiente()<<"x^"<<this->getGrado();
+				}
+			}
 		}
 	}
 }
