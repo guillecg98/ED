@@ -21,16 +21,19 @@ void ed::Polinomio::ordenaPolinomio()
 	#endif
 
 	Monomio aux;
+	int j;
 
-	//bucle para ordenar
-	for( int i = 0; i < this->getNumeroMonomios()-1; i++)
+	//bucle para ordenar por inserción
+	for( int i = 1; i < this->getNumeroMonomios(); i++)
 	{
-		if(this->vector[i].getGrado() < this->vector[i+1].getGrado())
-		{
-			aux.setGrado(this->vector[i].getGrado());
-			this->vector[i].setGrado(this->vector[i+1].getGrado());
-			this->vector[i+1].setGrado(aux.getGrado());
-		}
+			aux = this->vector[i];
+			j = i - 1;
+			while( (this->vector[j].getGrado() < aux.getGrado()) && (j >= 0) )
+			{
+				this->vector[j+1] = this->vector[j];
+				j--;
+			}
+			this->vector[j+1] = aux;
 	}
 
 	//bucle que suma aquellos monomios con mismo grado
@@ -230,11 +233,13 @@ ed::Polinomio & ed::Polinomio::operator/=(double const &x)
 // Funciones lectura y escritura de la clase Polinomio
 void ed::Polinomio::leerPolinomio()
 {
+
 	int tam,valorG;
 	double valorC;
 	std::cout<<"Numero de Monomios del Polinomio:";
 	std::cin>>tam;
 	Monomio m;
+	this->vector.clear();
 
 	for(int i = 0; i < tam; i++)
 	{
@@ -255,6 +260,10 @@ void ed::Polinomio::leerPolinomio()
 		m.setGrado(valorG);
 		this->vector.push_back(m);
 	}
+	if(this->isOrdered() == false)
+	{
+		this->ordenaPolinomio();
+	}
 	std::cout<<"Se ha creado el Polinomio!\n";
 }
 
@@ -262,6 +271,10 @@ void ed::Polinomio::escribirPolinomio()
 {
 	for(int i = 0; i < this->getNumeroMonomios(); i++)
 	{
+		if(i != 0)
+		{
+			std::cout<<" + ";
+		}
 		this->vector[i].escribirMonomio();
 	}
 }
