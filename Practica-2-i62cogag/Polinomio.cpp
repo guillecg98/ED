@@ -262,46 +262,6 @@ void ed::Polinomio::escribirPolinomio()
 {
 	for(int i = 0; i < this->getNumeroMonomios(); i++)
 	{
-		if(this->vector[i].getCoeficiente() == 1)
-		{
-			if(this->vector[i].getGrado() == 0)
-			{
-				std::cout<<this->vector[i].getCoeficiente(); //imprime 1
-			} else{
-				if(this->vector[i].getGrado() == 1)
-				{
-					std::cout<<"x";//imprime 1X^1
-				} else{
-					std::cout<<"x^"<<this->vector[i].getGrado();//imprime 1X^N
-				}
-			}
-		} else{
-			if(this->vector[i].getCoeficiente() == -1)
-			{
-				if(this->vector[i].getGrado() == 0)
-				{
-					std::cout<<"-"<<this->vector[i].getCoeficiente(); //imprime -1
-				} else{
-					if(this->vector[i].getGrado() == 1)
-					{
-						std::cout<<"-x";//imprime -1X^1
-					} else{
-						std::cout<<"-x^"<<this->vector[i].getGrado();//imprime -1X^N
-					}
-				}
-			} else{
-				if(this->vector[i].getGrado() == 0)
-				{
-					std::cout<<this->vector[i].getCoeficiente();
-				} else{
-					if(this->vector[i].getGrado() == 1)
-					{
-						std::cout<<this->vector[i].getCoeficiente()<<"x";
-					} else{
-							std::cout<<this->vector[i].getCoeficiente()<<"x^"<<this->vector[i].getGrado();
-					}
-				}
-			}
-		}
+		this->vector[i].escribirMonomio();
 	}
 }
