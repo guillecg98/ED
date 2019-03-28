@@ -195,7 +195,7 @@ void ed::testPolinomio()
 	std::cout<< "Asignación de un monomio a un polinomio --> p1 = m"<< std::endl;
 	p1 = m;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "m = ";
 	m.escribirMonomio();
@@ -205,7 +205,7 @@ void ed::testPolinomio()
 	std::cout<< "Asignación de un número a un polinomio --> p1 = x"<< std::endl;
 	p1 = x;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "x = " << x;
 	std::cout << std::endl << std::endl;
@@ -264,7 +264,7 @@ void ed::testPolinomio()
 	std::cout<< "Resultado p1 += p2"<< std::endl;
 	p1 += p2;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de resta y asignación
@@ -278,7 +278,7 @@ void ed::testPolinomio()
 	std::cout<< "Resultado p1 -= p2"<< std::endl;
 	p1 -= p2;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de multiplicación y asignación
@@ -292,7 +292,7 @@ void ed::testPolinomio()
 	std::cout<< "Resultado p1 *= p2"<< std::endl;
 	p1 *= p2;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de división y asignación
@@ -308,7 +308,7 @@ void ed::testPolinomio()
 		std::cout<< "Resultado p1 *= p2"<< std::endl;
 		p1 /= p2;
 		std::cout<< "p1 = ";
-		p2.escribirPolinomio();
+		p1.escribirPolinomio();
 		std::cout << std::endl << std::endl;
 	}
 	else
@@ -336,50 +336,64 @@ void ed::testPolinomio()
 	//
 	// Operador de suma y asignación
 	std::cout<< "Operador p3 += m"<< std::endl;
-	p3 += m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "m = ";
 	m.escribirMonomio();
+  std::cout << std::endl;
+  std::cout<<"Resultado: ";
+  p3 += m;
+  p3.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de resta y asignación
 	std::cout<< "Operador p3 -= m "<< std::endl;
-	p3 -= m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "m = ";
 	m.escribirMonomio();
+  std::cout << std::endl;
+  std::cout<<"Resultado: ";
+  p3 -= m;
+  p3.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de multiplicación y asignación
 	std::cout<< "Operador p3 *= m "<< std::endl;
-	p3 *= m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "m = ";
 	m.escribirMonomio();
+  std::cout << std::endl;
+  std::cout<<"Resultado: ";
+  p3 *= m;
+  p3.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de división y asignación
 	std::cout<< "Operador p3 /= m "<< std::endl;
+  std::cout<< "p3 = ";
+  p3.escribirPolinomio();
+  std::cout << std::endl;
+  std::cout<< "m = ";
+  m.escribirMonomio();
+  std::cout << std::endl;
+
 	if (p3.getGrado() >= m.getGrado())
 	{
+    std::cout<<"Resultado: ";
 		p3 /= m;
+    p3.escribirPolinomio();
 	}
 	else
 	{
 		std::cout << "No se puede dividir p3 entre m, porque el grado de p3 no es mayor o igual que el grado de m" << std::endl;
 	}
 
-	std::cout<< "p3 = ";
-	p3.escribirPolinomio();
-	std::cout << std::endl;
-	std::cout<< "m = ";
-	m.escribirMonomio();
+
 	std::cout << std::endl << std::endl;
 
 	//
@@ -399,43 +413,55 @@ void ed::testPolinomio()
 	//
 	// Operador de suma y asignación
 	std::cout<< "Operador p3 += x"<< std::endl;
-	p3 += x;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
-	std::cout<< "x = " << x << std::endl << std::endl;
+	std::cout<< "x = " << x << std::endl;
+  std::cout<<"Resultado: ";
+  p3 += x;
+  p3.escribirPolinomio();
+  std::cout << std::endl << std::endl;
 
 	// Operador de resta y asignación
 	std::cout<< "Operador p3 -= x"<< std::endl;
-	p3 -= x;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
-	std::cout<< "x = " << x << std::endl << std::endl;
+	std::cout<< "x = " << x << std::endl;
+  std::cout<<"Resultado: ";
+  p3 -= x;
+  p3.escribirPolinomio();
+  std::cout << std::endl << std::endl;
 
 	// Operador de multiplicación y asignación
 	std::cout<< "Operador p3 *= x"<< std::endl;
-	p3 *= x;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
-	std::cout<< "x = " << x << std::endl << std::endl;
+	std::cout<< "x = " << x << std::endl;
+  std::cout<<"Resultado: ";
+  p3 *= x;
+  p3.escribirPolinomio();
+  std::cout << std::endl << std::endl;
 
 	// Operador de división y asignación
 	std::cout<< "Operador p3 /= x "<< std::endl;
+  std::cout<< "p3 = ";
+  p3.escribirPolinomio();
+  std::cout << std::endl;
+  std::cout<< "x = " << x << std::endl;
+
 	if (std::abs(x) > COTA_ERROR)
 	{
+    std::cout<<"Resultado: ";
 		p3 /= x;
+    p3.escribirPolinomio();
 	}
 	else
 	{
 		std::cout << "No se puede dividir p3 entre x, porque x es 0.0" << std::endl;
 	}
-
-	std::cout<< "p3 = ";
-	p3.escribirPolinomio();
-	std::cout << std::endl;
-	std::cout<< "x = " << x << std::endl << std::endl;
+    std::cout << std::endl << std::endl;
 
 	//
 	std::cout << "Para continuar, pulse ";
@@ -448,7 +474,7 @@ void ed::testPolinomio()
 
 
 	///////////////////////////////////////////////////////////////
-  /*
+
 	// Calcular el valor de un polinomo para un número real x
 	std::cout << BIGREEN;
 	std::cout<< "Valor de un polinomo para un número real x" << std::endl << std::endl;
@@ -468,7 +494,7 @@ void ed::testPolinomio()
 	p3.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "p3(" << x << ") = " << p3.calcularValor(x) << std::endl << std::endl;
-*/
+
 
 	// Fin
 	return;

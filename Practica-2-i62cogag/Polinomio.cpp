@@ -50,15 +50,18 @@ void ed::Polinomio::ordenaPolinomio()
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 {
-	if(&p != this)
+	if(this != &p)
 	{
 		this->vector.clear();
-		this->vector = p.vector;
+		for(int i = 0; i < p.getNumeroMonomios(); i++)
+		{
+			this->vector.push_back(p.vector[i]);
+		}
 	}											/*	SI ESTE METODO FALLA: PROBAR A IGUALARLO ITEM A ITEM RECORRIENDO EL POLINOMIO P	 */
 	// Se devuelve el objeto actual
-	#ifndef NDEBUG
+	/*#ifndef NDEBUG
 		assert( this == &p );
-	#endif
+	#endif*/
 
 	return *this;
 }
@@ -116,7 +119,7 @@ ed::Polinomio & ed::Polinomio::operator+=(double const &x)
 	Monomio m;
 	m = x;
 	this->vector.push_back(m);
-	this->ordenaPolinomio();
+	//this->ordenaPolinomio();
 	return *this;
 }
 
@@ -161,8 +164,8 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p)
 		}
 	}
 	nuevo->ordenaPolinomio();
-
-	return *nuevo;
+	*this = *nuevo;
+	return *this;
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(Monomio const &m)
@@ -209,7 +212,7 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
 ed::Polinomio & ed::Polinomio::operator/=(Monomio const &m)
 {
 	#ifndef NDEBUG
-		assert( m.getGrado() >= this->getGrado() );
+		assert( m.getGrado() <= this->getGrado() );
 		assert( this->esNulo() == false );
 	#endif
 
@@ -243,7 +246,7 @@ void ed::Polinomio::leerPolinomio()
 
 	for(int i = 0; i < tam; i++)
 	{
-		std::cout<<"Monomio "<<i<<"\n";
+		std::cout<<"Monomio "<<i+1<<"\n";
 		std::cout<<"Coeficiente: ";
 		std::cin>>valorC;
 		std::cout<<"Grado: ";
@@ -252,7 +255,7 @@ void ed::Polinomio::leerPolinomio()
 		{
 			if( (this->vector[j].getGrado() == valorG) || (valorG < 0) )
 			{
-				std::cout<<"No puedes introducir dos monomios con el mismo grado en un mismo Polinomio ni un grado negativo, se ha asignado un valor de 0 al ultimo grado introduzido\n";
+				std::cout<<"No puedes introducir dos monomios con el mismo grado en un mismo Polinomio ni un grado negativo, se ha asignado un valor de 0 al ultimo grado introducido\n";
 				valorG = 0;
 			}
 		}
@@ -277,4 +280,14 @@ void ed::Polinomio::escribirPolinomio()
 		}
 		this->vector[i].escribirMonomio();
 	}
+}
+
+double ed::Polinomio::calcularValor(double const &x)
+{
+	double res = 0;
+	for(int i = 0; i < this->getNumeroMonomios(); i++)
+	{
+		res += this->vector[i].calcularValor(x);
+	}
+	return res;
 }

@@ -179,8 +179,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	//! \name Funciones auxiliares de la clase Polinomio
 
-	// COMPLETAR
-
+  double calcularValor(double const &x); 
 
 }; // Fin de la definición de la clase Polinomio
 
