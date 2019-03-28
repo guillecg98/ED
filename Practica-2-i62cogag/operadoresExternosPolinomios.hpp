@@ -27,14 +27,20 @@ namespace ed
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2);
-
-	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
+	bool operator==(ed::Polinomio const &p, Monomio const &m);
+	bool operator==(Monomio const &m, ed::Polinomio const &p);
+	bool operator==(ed::Polinomio const &p, double const &x);
+	bool operator==(double const &x, ed::Polinomio const &p);
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//! \name Operadores de desigualdad
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2);
+	bool operator!=(ed::Polinomio const &p, Monomio const &m);
+	bool operator!=(Monomio const &m, ed::Polinomio const &p);
+	bool operator!=(ed::Polinomio const &p, double const &x);
+	bool operator!=(double const &x, ed::Polinomio const &p);
 
 	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
 

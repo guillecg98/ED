@@ -18,46 +18,187 @@ namespace ed
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-	#ifndef NDEBUG
+	/*#ifndef NDEBUG
 		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
-	#endif
+	#endif*/
+
+	bool valor = true;
 
 	for(int i = 0; i < p1.getNumeroMonomios(); i++)
 	{
 		if(p1.obtieneMonomio(i) != p2.obtieneMonomio(i))
 		{
-				return false;
+				valor = false;
 		}
 	}
-		return true;
+
+	/*#ifndef NDEBUG
+	for(int j = 0; j < p1.getNumeroMonomios(); j++)
+	{
+		assert( (p1.obtieneMonomio(j) == p2.obtieneMonomio(j)) and (valor == true) );
+	}
+	#endif*/
+
+	return valor;
 }
 
-// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
+bool operator==(ed::Polinomio const &p, Monomio const &m)
+{
+	bool valor = false;
 
+	if((p.getNumeroMonomios() == 1) && (p.obtieneMonomio(0) == m))
+	{
+		valor = true;
+	}
 
+	/*#ifndef NDEBUG
+		assert( (p.obtieneMonomio(0) == m) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator==(Monomio const &m, ed::Polinomio const &p)
+{
+	bool valor = false;
+
+	if((p.getNumeroMonomios() == 1) && (m == p.obtieneMonomio(0)))
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (m == p.obtieneMonomio(0)) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator==(ed::Polinomio const &p, double const &x)
+{
+	bool valor = false;
+
+	if((p.getNumeroMonomios() == 1) && (p.obtieneMonomio(0) == x))
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (p.obtieneMonomio(0) == x) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator==(double const &x, ed::Polinomio const &p)
+{
+	bool valor = false;
+
+	if((p.getNumeroMonomios() == 1) && (x == p.obtieneMonomio(0)))
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (x == p.obtieneMonomio(0)) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Operadores de desigualdad
 bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-	// COMPLETAR Y MODIFICAR
-	#ifndef NDEBUG
+	/*#ifndef NDEBUG
 		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
-	#endif
+	#endif*/
+
+	bool valor = false;
 
 	for(int i = 0; i < p1.getNumeroMonomios(); i++)
 	{
 		if(p1.obtieneMonomio(i) != p2.obtieneMonomio(i))
 		{
-				return true;
+				valor = true;
 		}
 	}
 
-	// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-	return false;
+	/*#ifndef NDEBUG
+	for(int j = 0; j < p1.getNumeroMonomios(); j++)
+	{
+		assert( (p1.obtieneMonomio(j) != p2.obtieneMonomio(j)) and (valor == true) );
+	}
+	#endif*/
+
+	return valor;
 }
 
-// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
+bool operator!=(ed::Polinomio const &p, Monomio const &m)
+{
+	bool valor = false;
+
+	if( (p.getNumeroMonomios() > 1) || (p.obtieneMonomio(0) != m) )
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (p.obtieneMonomio(0) != m) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator!=(Monomio const &m, ed::Polinomio const &p)
+{
+	bool valor = false;
+
+	if( (p.getNumeroMonomios() > 1) || (m != p.obtieneMonomio(0)) )
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (m != p.obtieneMonomio(0)) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator!=(ed::Polinomio const &p, double const &x)
+{
+	bool valor = false;
+
+	if( (p.getNumeroMonomios() > 1) || (p.obtieneMonomio(0) != x) )
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (p.obtieneMonomio(0) != x) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+bool operator!=(double const &x, ed::Polinomio const &p)
+{
+	bool valor = false;
+
+	if( (p.getNumeroMonomios() > 1) || (x != p.obtieneMonomio(0)) )
+	{
+		valor = true;
+	}
+
+	/*#ifndef NDEBUG
+		assert( (x != p.obtieneMonomio(0)) and (valor == true) );
+	#endif*/
+
+	return valor;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,20 +256,30 @@ ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2)
 // Sobrecarga del operador de entrada
 istream &operator>>(istream &stream, Polinomio &p)
 {
-	// COMPLETAR
+	int tam;
+	std::cout<<"Numero de monomios del Polinomio: ";
+	std::cin>>tam;
+	Monomio m;
 
-	// Se devuelve el flujo de entrada
+	for(int i = 0; i < tam; i++)
+	{
+		stream >> m;
+		p.addMonomio(m);
+	}
   return stream;
 }
-
-
 
 // Sobrecarga del operador de salida
 ostream &operator<<(ostream &stream, Polinomio const &p)
 {
-	// COMPLETAR
-
-	// Se devuelve el flujo de salida
+	for(int i = 0; i < p.getNumeroMonomios(); i++)
+	{
+		if(i != 0)
+		{
+			std::cout<<" + ";
+		}
+		stream << p.obtieneMonomio(i);
+	}
   return stream;
 }
 
