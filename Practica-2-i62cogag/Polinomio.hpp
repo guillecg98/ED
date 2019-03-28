@@ -113,7 +113,7 @@ class Polinomio: public ed::PolinomioInterfaz
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
-        assert( this->existeMonomio(n) == true );
+        assert( this->getNumeroMonomios() >= n );
       #endif
 
       return this->vector[n];
@@ -137,6 +137,13 @@ class Polinomio: public ed::PolinomioInterfaz
     }
 
 
+  inline void addMonomio(Monomio const &m)
+  {
+    this->vector.push_back(m);
+    #ifndef NDEBUG
+      assert( this->vector.back() == m );
+    #endif
+  }
 
 	//! \name Funciones de modificación de la clase Polinomio
   //funcion extra: ordena un polinomio desordenado y agrupa aquellos monomios con mismo grado
@@ -179,7 +186,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	//! \name Funciones auxiliares de la clase Polinomio
 
-  double calcularValor(double const &x); 
+  double calcularValor(double const &x);
 
 }; // Fin de la definición de la clase Polinomio
 
