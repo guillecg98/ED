@@ -66,7 +66,7 @@ void ed::testPolinomio()
   std::cout << BIGREEN;
   std::cout << "testPolinomio()" << std::endl;
   std::cout << RESET;
-  std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Polinomio " << std::endl << std::endl;
+  std::cout << std::endl << std::endl;
 
 
 	double x;
@@ -513,7 +513,6 @@ void ed::operadoresExternosPolinomios()
   std::cout << RESET;
   std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Polinomio y los operadores externos de dicha clase" << std::endl << std::endl;
 
-/*
 	double x;
 
 	// Constructor por defecto
@@ -693,6 +692,7 @@ void ed::operadoresExternosPolinomios()
 	std::cout << "p1 = " << p1 << std::endl << std::endl;
 
 	//
+  /*
 	std::cout << "Para continuar, pulse ";
 	std::cout << INVERSE ;
 	std::cout << "ENTER";
