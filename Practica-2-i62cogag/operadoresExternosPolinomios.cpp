@@ -18,10 +18,6 @@ namespace ed
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-	/*#ifndef NDEBUG
-		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
-	#endif*/
-
 	bool valor = true;
 
 	for(int i = 0; i < p1.getNumeroMonomios(); i++)
@@ -32,12 +28,15 @@ bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 		}
 	}
 
-	/*#ifndef NDEBUG
+	#ifndef NDEBUG
 	for(int j = 0; j < p1.getNumeroMonomios(); j++)
 	{
-		assert( (p1.obtieneMonomio(j) == p2.obtieneMonomio(j)) and (valor == true) );
+		if(p1.obtieneMonomio(j) != p2.obtieneMonomio(j))
+		{
+			assert( valor == false );
+		}
 	}
-	#endif*/
+	#endif
 
 	return valor;
 }
@@ -51,9 +50,12 @@ bool operator==(ed::Polinomio const &p, Monomio const &m)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (p.obtieneMonomio(0) == m) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+	if((p.getNumeroMonomios() == 1) && (p.obtieneMonomio(0) == m))
+	{
+		assert( valor == true );
+	}
+	#endif
 
 	return valor;
 }
@@ -67,9 +69,12 @@ bool operator==(Monomio const &m, ed::Polinomio const &p)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (m == p.obtieneMonomio(0)) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+	if((p.getNumeroMonomios() == 1) && (m == p.obtieneMonomio(0)))
+	{
+		assert( valor == true );
+	}
+	#endif
 
 	return valor;
 }
@@ -83,9 +88,12 @@ bool operator==(ed::Polinomio const &p, double const &x)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (p.obtieneMonomio(0) == x) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+	if((p.getNumeroMonomios() == 1) && (p.obtieneMonomio(0) == x))
+	{
+		assert( valor == true );
+	}
+	#endif
 
 	return valor;
 }
@@ -99,9 +107,12 @@ bool operator==(double const &x, ed::Polinomio const &p)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (x == p.obtieneMonomio(0)) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+	if((p.getNumeroMonomios() == 1) && (x == p.obtieneMonomio(0)))
+	{
+		assert( valor == true );
+	}
+	#endif
 
 	return valor;
 }
@@ -110,10 +121,6 @@ bool operator==(double const &x, ed::Polinomio const &p)
 // Operadores de desigualdad
 bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-	/*#ifndef NDEBUG
-		assert( p1.getNumeroMonomios() == p2.getNumeroMonomios() );
-	#endif*/
-
 	bool valor = false;
 
 	for(int i = 0; i < p1.getNumeroMonomios(); i++)
@@ -124,12 +131,15 @@ bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2)
 		}
 	}
 
-	/*#ifndef NDEBUG
+	#ifndef NDEBUG
 	for(int j = 0; j < p1.getNumeroMonomios(); j++)
 	{
-		assert( (p1.obtieneMonomio(j) != p2.obtieneMonomio(j)) and (valor == true) );
+		if(p1.obtieneMonomio(j) != p2.obtieneMonomio(j))
+		{
+			assert( valor == true );
+		}
 	}
-	#endif*/
+	#endif
 
 	return valor;
 }
@@ -143,9 +153,12 @@ bool operator!=(ed::Polinomio const &p, Monomio const &m)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (p.obtieneMonomio(0) != m) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+		if( (p.getNumeroMonomios() > 1) || (p.obtieneMonomio(0) != m) )
+		{
+			assert( valor == true );
+		}
+	#endif
 
 	return valor;
 }
@@ -159,9 +172,12 @@ bool operator!=(Monomio const &m, ed::Polinomio const &p)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (m != p.obtieneMonomio(0)) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+		if( (p.getNumeroMonomios() > 1) || (m != p.obtieneMonomio(0)) )
+		{
+			assert( valor == true );
+		}
+	#endif
 
 	return valor;
 }
@@ -175,9 +191,12 @@ bool operator!=(ed::Polinomio const &p, double const &x)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (p.obtieneMonomio(0) != x) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+		if( (p.getNumeroMonomios() > 1) || (p.obtieneMonomio(0) != x) )
+		{
+			assert( valor == true );
+		}
+	#endif
 
 	return valor;
 }
@@ -191,9 +210,12 @@ bool operator!=(double const &x, ed::Polinomio const &p)
 		valor = true;
 	}
 
-	/*#ifndef NDEBUG
-		assert( (x != p.obtieneMonomio(0)) and (valor == true) );
-	#endif*/
+	#ifndef NDEBUG
+		if( (p.getNumeroMonomios() > 1) || (x != p.obtieneMonomio(0)) )
+		{
+			assert( valor == true );
+		}
+	#endif
 
 	return valor;
 }
