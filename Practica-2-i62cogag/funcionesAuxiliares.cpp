@@ -692,7 +692,7 @@ void ed::operadoresExternosPolinomios()
 	std::cout << "p1 = " << p1 << std::endl << std::endl;
 
 	//
-  /*
+
 	std::cout << "Para continuar, pulse ";
 	std::cout << INVERSE ;
 	std::cout << "ENTER";
@@ -718,6 +718,7 @@ void ed::operadoresExternosPolinomios()
 
 	/////////////////////////////////////////
 	// Operadores ariméticos binarios
+  /*
 
 	// Operaciones con dos polinomios
 	std::cout << BIYELLOW;

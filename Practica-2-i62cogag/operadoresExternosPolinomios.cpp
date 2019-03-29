@@ -229,17 +229,31 @@ bool operator!=(double const &x, ed::Polinomio const &p)
 // COMPLETAR
 ed::Polinomio & operator+(ed::Polinomio const & p)
 {
-	// COMPLETAR Y MODIFICAR
-	// Se crea un nuevo objeto
 	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	// Se devuelve el resultado
+	#ifndef NDEBUG
+			assert( p == *nuevo );
+	#endif
+
 	return *nuevo;
 }
 
 
-// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
+ed::Polinomio & operator-(ed::Polinomio const & p)
+{
+	ed::Polinomio *nuevo = new ed::Polinomio();
 
+	for(int i = 0; i < p.getNumeroMonomios(); i++)
+	{
+		nuevo->addMonomio(-p.obtieneMonomio(i));
+	}
+
+	#ifndef NDEBUG
+		assert( p != *nuevo );
+	#endif
+
+	return *nuevo;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////
 

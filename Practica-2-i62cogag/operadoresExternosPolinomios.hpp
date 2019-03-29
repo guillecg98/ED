@@ -50,8 +50,7 @@ namespace ed
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 		ed::Polinomio & operator+(ed::Polinomio const & p);
-
-	// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
+		ed::Polinomio & operator-(ed::Polinomio const & p);
 
 
 //////////////////////////////////////////////////////////////////////////////////////
