@@ -334,7 +334,7 @@ ed::Monomio & operator/ (double const &x, ed::Monomio const &m1)
 	ostream &operator<<(ostream &stream, ed::Monomio const &m)
 	{
 		// COMPLETAR
-		stream << m.getCoeficiente() << " " << m.getGrado();
+		stream << m.getCoeficiente() << "x^" << m.getGrado();
 
 		return stream;
 	}

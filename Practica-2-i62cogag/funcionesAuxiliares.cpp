@@ -718,7 +718,6 @@ void ed::operadoresExternosPolinomios()
 
 	/////////////////////////////////////////
 	// Operadores ariméticos binarios
-  /*
 
 	// Operaciones con dos polinomios
 	std::cout << BIYELLOW;
@@ -842,6 +841,6 @@ void ed::operadoresExternosPolinomios()
 
 
 	std::cout << std::endl;
-*/
+
 	return;
 }

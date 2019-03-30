@@ -59,26 +59,37 @@ namespace ed
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 		ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+		ed::Polinomio & operator+(ed::Polinomio const &p, Monomio const &m);
+		ed::Polinomio & operator+(Monomio const &m, ed::Polinomio const &p);
+		ed::Polinomio & operator+(ed::Polinomio const &p, double const &x);
+		ed::Polinomio & operator+(double const &x, ed::Polinomio const &p);
 
-		// COMPLETAR LOS OTROS OPERADORES DE SUMA
 
 
 		//////////////////////////////////////////////////////////
 		//! \name Operador binario de la resta
-
-		// COMPLETAR
-
+		ed::Polinomio & operator-(ed::Polinomio const &p1, ed::Polinomio const &p2);
+		ed::Polinomio & operator-(ed::Polinomio const &p, Monomio const &m);
+		ed::Polinomio & operator-(Monomio const &m, ed::Polinomio const &p);
+		ed::Polinomio & operator-(ed::Polinomio const &p, double const &x);
+		ed::Polinomio & operator-(double const &x, ed::Polinomio const &p);
 
 		///////////////////////////////////////////////////////////////////////////
 		//! \name Operadores binarios de la multiplicación
-
-		// COMPLETAR
+		ed::Polinomio & operator*(ed::Polinomio const &p1, ed::Polinomio const &p2);
+		ed::Polinomio & operator*(ed::Polinomio const &p, Monomio const &m);
+		ed::Polinomio & operator*(Monomio const &m, ed::Polinomio const &p);
+		ed::Polinomio & operator*(ed::Polinomio const &p, double const &x);
+		ed::Polinomio & operator*(double const &x, ed::Polinomio const &p);
 
 		///////////////////////////////////////////////////////////////////////////
 
 		//! \name Operadores binarios de la división
-
-		// COMPLETAR
+		ed::Polinomio & operator/(ed::Polinomio const &p1, ed::Polinomio const &p2);
+		ed::Polinomio & operator/(ed::Polinomio const &p, Monomio const &m);
+		ed::Polinomio & operator/(Monomio const &m, ed::Polinomio const &p);
+		ed::Polinomio & operator/(ed::Polinomio const &p, double const &x);
+		ed::Polinomio & operator/(double const &x, ed::Polinomio const &p);
 
 	/////////////////////////////////////////////////////////////////////////////
 

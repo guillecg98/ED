@@ -205,8 +205,8 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
 		}
 	}
 	nuevo->ordenaPolinomio();
-
-	return *nuevo;
+	*this = *nuevo;
+	return *this;
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(Monomio const &m)

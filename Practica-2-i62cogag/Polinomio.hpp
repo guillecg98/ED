@@ -113,7 +113,6 @@ class Polinomio: public ed::PolinomioInterfaz
     {
       #ifndef NDEBUG
         assert( this->esNulo() == false );
-        //assert( this->getNumeroMonomios() >= n );
       #endif
 
       return this->vector[n];
@@ -142,6 +141,18 @@ class Polinomio: public ed::PolinomioInterfaz
     this->vector.push_back(m);
     #ifndef NDEBUG
       assert( this->vector.back() == m );
+    #endif
+  }
+
+  inline void remove(int n)
+  {
+    #ifndef NDEBUG
+      assert( this->getNumeroMonomios() >= n );
+    #endif
+    int old = this->getNumeroMonomios();
+    this->vector.erase(this->vector.begin()+n);
+    #ifndef NDEBUG
+      assert( this->getNumeroMonomios() == (old-1) );
     #endif
   }
 
