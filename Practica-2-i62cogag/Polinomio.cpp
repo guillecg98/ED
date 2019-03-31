@@ -200,8 +200,11 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
 	{
 		for(int j = 0; j < p.getNumeroMonomios(); j++)
 		{
-			m = this->vector[i] / p.vector[j];
-			nuevo->vector.push_back(m);
+			if(this->vector[i].getGrado() >= p.vector[j].getGrado())
+			{
+				m = this->vector[i] / p.vector[j];
+				nuevo->vector.push_back(m);
+			}
 		}
 	}
 	nuevo->ordenaPolinomio();
@@ -218,7 +221,10 @@ ed::Polinomio & ed::Polinomio::operator/=(Monomio const &m)
 
 	for(int i = 0; i < this->getNumeroMonomios(); i++)
 	{
-		this->vector[i] /= m;
+		if(this->vector[i].getGrado() >= m.getGrado())
+		{
+			this->vector[i] /= m;
+		}
 	}
 	return *this;
 }

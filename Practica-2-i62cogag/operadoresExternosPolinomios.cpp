@@ -623,19 +623,13 @@ ed::Polinomio & operator*(double const &x, ed::Polinomio const &p)
 ed::Polinomio & operator/(ed::Polinomio const &p1, ed::Polinomio const &p2)
 {
 	#ifndef NDEBUG
-		assert( p2.getGrado() <= p1.getGrado() );
+		assert( p1.getGrado() >= p2.getGrado() );
+		assert( p2.esNulo() == false );
 	#endif
 
-	ed::Polinomio *nuevo = new ed::Polinomio();
+	ed::Polinomio *nuevo = new ed::Polinomio(p1);
 
-	for(int i = 0; i < p1.getNumeroMonomios(); i++)
-	{
-		for(int j = 0; j < p2.getNumeroMonomios(); j++)
-		{
-			nuevo->addMonomio(p1.obtieneMonomio(i) / p2.obtieneMonomio(j));
-		}
-	}
-	nuevo->ordenaPolinomio();
+	*nuevo/=p2;
 
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
@@ -654,12 +648,9 @@ ed::Polinomio & operator/(ed::Polinomio const &p, Monomio const &m)
 		assert( m.getGrado() <= p.getGrado() );
 	#endif
 
-	ed::Polinomio *nuevo = new ed::Polinomio();
+	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	for(int i = 0; i < p.getNumeroMonomios(); i++)
-	{
-		nuevo->addMonomio(p.obtieneMonomio(i) / m);
-	}
+	*nuevo/=m;
 
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
@@ -678,13 +669,9 @@ ed::Polinomio & operator/(Monomio const &m, ed::Polinomio const &p)
 		assert( p.getGrado() <= m.getGrado() );
 	#endif
 
-	ed::Polinomio *nuevo = new ed::Polinomio();
+	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	for(int i = 0; i < p.getNumeroMonomios(); i++)
-	{
-		nuevo->addMonomio(m / p.obtieneMonomio(i));
-	}
-
+	*nuevo/=m;
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
 	{
@@ -702,13 +689,9 @@ ed::Polinomio & operator/(ed::Polinomio const &p, double const &x)
 		assert( std::abs((x-0.0) > COTA_ERROR) );
 	#endif
 
-	ed::Polinomio *nuevo = new ed::Polinomio();
+	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	for(int i = 0; i < p.getNumeroMonomios(); i++)
-	{
-		nuevo->addMonomio(p.obtieneMonomio(i) / x);
-	}
-
+	*nuevo/=x;
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
 	{
@@ -727,12 +710,9 @@ ed::Polinomio & operator/(double const &x, ed::Polinomio const &p)
 		assert( p.obtieneMonomio(0).getCoeficiente() != 0.0 );
 	#endif
 
-	ed::Polinomio *nuevo = new ed::Polinomio();
+	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	for(int i = 0; i < p.getNumeroMonomios(); i++)
-	{
-		nuevo->addMonomio(x / p.obtieneMonomio(i));
-	}
+	*nuevo/=x;
 
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
