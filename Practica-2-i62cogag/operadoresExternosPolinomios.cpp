@@ -650,7 +650,10 @@ ed::Polinomio & operator/(ed::Polinomio const &p, Monomio const &m)
 
 	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	*nuevo/=m;
+	if(m.getGrado() <= nuevo->getGrado())
+	{
+		*nuevo/=m;
+	}
 
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
@@ -671,7 +674,10 @@ ed::Polinomio & operator/(Monomio const &m, ed::Polinomio const &p)
 
 	ed::Polinomio *nuevo = new ed::Polinomio(p);
 
-	*nuevo/=m;
+	if(m.getGrado() <= nuevo->getGrado())
+	{
+		*nuevo/=m;
+	}
 	//ahora tenemos que borrar aquellas posiciones que sean 0.0x^0 creadas por el constructor
 	for(int j = 0; j < nuevo->getNumeroMonomios(); j++)
 	{
