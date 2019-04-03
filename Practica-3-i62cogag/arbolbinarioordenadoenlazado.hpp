@@ -36,38 +36,60 @@ namespace ed
 			NodoArbolBinario (const G &info)
 			{
 				// TODO
+				this->setInfo(info);
+
+				#ifndef NDEBUG
+					assert( this->isHoja() == true );
+				#endif
 			}
 
-			NodoArbolBinario (const NodoArbolBinario &n)
+			NodoArbolBinario (const NodoArbolBinario &n) //esto comentalo para compilar hasta que te enteres de como funciona
 			{
 				// TODO
+
+				*this = n;
+				#ifndef NDEBUG
+					assert( this->getInfo() == n.getInfo() );
+					assert( this->getIzquierdo() == n.getIzquierdo() );
+					assert( this->getDerecho() == n.getDerecho() );
+				#endif
 			}
 
 			/*!\brief Observadores.*/
 			const G & getInfo() const
 			{
 				// TODO
+				return this->_info;
 			}
 
 			NodoArbolBinario *getIzquierdo() const
 			{
 				// TODO
+				return this->_izquierdo;
 			}
 
 			NodoArbolBinario *getDerecho() const
 			{
 				// TODO
+				return this->_derecho;
 			}
 
 			bool esHoja() const
 			{
+				bool valor = false;
 				// TODO
-				return false;
+				if((this->getDerecho() == NULL) && (this->getIzquierdo() == NULL))
+				{
+					valor = true;
+				}
+
+				return valor;
 			}
 
 			void recorridoPreOrden (OperadorNodo<G> &operador) const
 			{
 				// TODO
+				
 			}
 
 			void recorridoPostOrden (OperadorNodo<G> &operador) const
@@ -83,17 +105,17 @@ namespace ed
 			/*!\brief Modificadores. */
 			void setInfo(const G &info)
 			{
-				// TODO
+				this->_info = info;
 			}
 
 			void setIzquierdo(NodoArbolBinario *n)
 			{
-				// TODO
+				this->_izquierdo = n.getIzquierdo();
 			}
 
 			void setDerecho(NodoArbolBinario *n)
 			{
-				// TODO
+				this->_derecho = n.getDerecho();
 			}
 
 			NodoArbolBinario & operator=(const NodoArbolBinario &n)
