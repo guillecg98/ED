@@ -89,17 +89,49 @@ namespace ed
 			void recorridoPreOrden (OperadorNodo<G> &operador) const
 			{
 				// TODO
-				
+				operador.aplicar(this->getInfo());
+				if(this->getIzquierdo() != NULL)
+				{
+					operador.aplicar(this->getIzquierdo()->getInfo());
+					this->recorridoPreOrden(operador);
+				}
+				if(this->getDerecho() != NULL)
+				{
+					operador.aplicar(this->getDerecho()->getInfo());
+					this->recorridoPreOrden(operador);
+				}
 			}
 
 			void recorridoPostOrden (OperadorNodo<G> &operador) const
 			{
 				// TODO
+				if(this->getIzquierdo() != NULL)
+				{
+					operador.aplicar(this->getIzquierdo()->getInfo());
+					this->recorridoPreOrden(operador);
+				}
+				if(this->getDerecho() != NULL)
+				{
+					operador.aplicar(this->getDerecho()->getInfo());
+					this->recorridoPreOrden(operador);
+				}
+				operador.aplicar(this->getInfo());
 			}
 
 			void recorridoInOrden (OperadorNodo<G> &operador) const
 			{
 				// TODO
+				if(this->getIzquierdo() != NULL)
+				{
+					operador.aplicar(this->getIzquierdo()->getInfo());
+					this->recorridoInOrden(operador);
+				}
+				operador.aplicar(this->getInfo());
+				if(this->getDerecho() != NULL)
+				{
+					operador.aplicar(this->getDerecho()->getInfo());
+					this->recorridoPreOrden(operador);
+				}
 			}
 
 			/*!\brief Modificadores. */
