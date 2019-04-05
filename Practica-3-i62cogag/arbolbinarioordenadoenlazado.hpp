@@ -43,7 +43,7 @@ namespace ed
 				#endif
 			}
 
-			NodoArbolBinario (const NodoArbolBinario &n) //esto comentalo para compilar hasta que te enteres de como funciona
+			NodoArbolBinario (const NodoArbolBinario &n)
 			{
 				// TODO
 
@@ -153,6 +153,17 @@ namespace ed
 			NodoArbolBinario & operator=(const NodoArbolBinario &n)
 			{
 				// TODO
+				if((this->getInfo() != n.getInfo()) || (this->getDerecho() != n.getDerecho()) || (this->getIzquierdo() != n.getIzquierdo()))
+				{
+					this->setInfo(n.getInfo());
+					this->setDerecho(n.getDerecho());
+					this->setIzquierdo(n.getIzquierdo());
+				}
+				#ifndef NDEBUG
+					assert( this->getInfo() == n.getInfo() );
+					assert( this->getDerecho() == n.getDerecho() );
+					assert( this->getIzquierdo() == n.getIzquierdo() );
+				#endif
 			}
 
 		}; //Fin clase NodoArbolBinario
@@ -167,11 +178,22 @@ namespace ed
 		ArbolBinarioOrdenadoEnlazado ()
 		{
 			// TODO
+			this->_raiz = NULL;
+
+			#ifndef NDEBUG
+				assert( this->estaVacio() == true );
+			#endif
 		}
 
 		ArbolBinarioOrdenadoEnlazado (const ArbolBinarioOrdenadoEnlazado<G>& a)
 		{
 			// TODO
+			*this = a;
+			#ifndef NDEBUG
+				assert( this->_raiz == a._raiz );
+				assert( this->_raiz->getDerecho() == a._raiz->getDerecho() );
+				assert( this->_raiz->getIzquierdo() == a._raiz->getIzquierdo() );
+			#endif
 		}
 
 		~ArbolBinarioOrdenadoEnlazado ()
@@ -226,24 +248,48 @@ namespace ed
 
 		bool estaVacio() const
 		{
-			// TODO
-			return false;
+			bool valor = false;
+
+			if(this->_raiz == NULL)
+			{
+				valor = true;
+			}
+			return valor;
 		}
 
 		G raiz() const
 		{
-			// TODO
+			#ifndef NDEBUG
+				assert( this->estaVacio() == false );
+			#endif
+
+			return this->_raiz->getInfo();
 		}
 
 		bool existeActual() const
 		{
 			// TODO
-			return false;
+			#ifndef NDEBUG
+				assert( this->estaVacio() == false );
+			#endif
+			bool valor = false;
+
+			if((this->_actual->getDerecho() != NULL) || (this->_actual->getIzquierdo() != NULL))
+			{
+				valor = true;
+			}
+
+			return valor;
 		}
 
 		G actual() const
 		{
 			// TODO
+			#ifndef NDEBUG
+				assert( this->existeActual() == true );
+			#endif
+
+			return this->_actual->getInfo();
 		}
 
 		/*!@}*/
