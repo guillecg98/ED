@@ -191,8 +191,8 @@ namespace ed
 			*this = a;
 			#ifndef NDEBUG
 				assert( this->_raiz == a._raiz );
-				assert( this->_raiz->getDerecho() == a._raiz->getDerecho() );
-				assert( this->_raiz->getIzquierdo() == a._raiz->getIzquierdo() );
+				assert( this->_actual == a._actual );
+				assert( this->_padre == a._padre );
 			#endif
 		}
 
@@ -205,7 +205,9 @@ namespace ed
 
 		ArbolBinarioOrdenadoEnlazado &operator=(const ArbolBinarioOrdenadoEnlazado& a)
 		{
-			// TODO
+			this->_raiz = a._raiz;
+			this->_actual = a._actual;
+			this->_padre = a._padre;
 		}
 
 		bool insertar(const G &x)
@@ -216,7 +218,15 @@ namespace ed
 
 		void borrarArbol()
 		{
-			// TODO
+			#ifndef NDEBUG
+				assert( not estaVacio() );
+			#endif
+
+			this->_raiz = NULL;
+
+			#ifndef NDEUBG
+				assert( estaVacio() );
+			#endif
 		}
 
 		bool borrar()
