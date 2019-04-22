@@ -92,13 +92,11 @@ namespace ed
 				operador.aplicar(this->getInfo());
 				if(this->getIzquierdo() != NULL)
 				{
-					operador.aplicar(this->getIzquierdo()->getInfo());
-					this->recorridoPreOrden(operador);
+					this->getIzquierdo()->recorridoPreOrden(operador);
 				}
 				if(this->getDerecho() != NULL)
 				{
-					operador.aplicar(this->getDerecho()->getInfo());
-					this->recorridoPreOrden(operador);
+					this->getDerecho()->recorridoPreOrden(operador);
 				}
 			}
 
@@ -107,13 +105,11 @@ namespace ed
 				// TODO
 				if(this->getIzquierdo() != NULL)
 				{
-					operador.aplicar(this->getIzquierdo()->getInfo());
-					this->recorridoPreOrden(operador);
+					this->getIzqiuerdo()->recorridoPreOrden(operador);
 				}
 				if(this->getDerecho() != NULL)
 				{
-					operador.aplicar(this->getDerecho()->getInfo());
-					this->recorridoPreOrden(operador);
+					this->getDerecho()->recorridoPreOrden(operador);
 				}
 				operador.aplicar(this->getInfo());
 			}
@@ -123,14 +119,12 @@ namespace ed
 				// TODO
 				if(this->getIzquierdo() != NULL)
 				{
-					operador.aplicar(this->getIzquierdo()->getInfo());
-					this->recorridoInOrden(operador);
+					this->getIzquierdo()->recorridoInOrden(operador);
 				}
 				operador.aplicar(this->getInfo());
 				if(this->getDerecho() != NULL)
 				{
-					operador.aplicar(this->getDerecho()->getInfo());
-					this->recorridoPreOrden(operador);
+					this->getDerechp()->recorridoPreOrden(operador);
 				}
 			}
 
@@ -250,10 +244,15 @@ namespace ed
 			// TODO
 		}
 
-		bool buscar(const G& x) const
+		bool buscar(const G& x) const //hacerlo con un while hasta que encuentre el elemento
 		{
-			// TODO
-			return false;
+			bool valor = false;
+			if(this-> == x)
+			{
+				return true;
+			}
+
+			return valor;
 		}
 
 		bool estaVacio() const
