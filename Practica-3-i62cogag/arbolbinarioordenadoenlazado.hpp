@@ -206,7 +206,7 @@ namespace ed
 
 		bool insertar(const G &x)
 		{
-			// TODO
+
 			return false;
 		}
 
@@ -246,11 +246,34 @@ namespace ed
 
 		bool buscar(const G& x) const //hacerlo con un while hasta que encuentre el elemento
 		{
+			int flag = 0;
 			bool valor = false;
-			if(this-> == x)
+			NodoArbolBinario * aux(this->_raiz);
+
+			while (flag == 0)//busqueda a traves del arbol binario empezando en la raiz
 			{
-				return true;
+				if(aux->getInfo() == x)
+				{
+					if(aux == this->_raiz)
+					{
+						this->_actual = aux;
+						this->_padre = NULL;
+					}else{
+						this->_actual = aux;
+						//padre es igual al padre de aux
+					}
+					valor = true;
+					flag = 1;
+				}else if (aux->getInfo() < x) // si x es menor que el nodo auxiliar
+				{
+					aux = aux->getIzquierdo();
+				}else{
+					aux = aux->getDerecho();
+				}
 			}
+			#ifndef NDEBUG
+				assert( (aux->getInfo() == x ) == valor );
+			#endif
 
 			return valor;
 		}
