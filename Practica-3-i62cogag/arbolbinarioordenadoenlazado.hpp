@@ -95,7 +95,7 @@ namespace ed
 			{
 				// TODO
 				if(this->getIzquierdo() != NULL){
-					this->getIzqiuerdo()->recorridoPreOrden(operador);
+					this->getIzquierdo()->recorridoPreOrden(operador);
 				}
 				if(this->getDerecho() != NULL){
 					this->getDerecho()->recorridoPreOrden(operador);
@@ -111,7 +111,7 @@ namespace ed
 				}
 				operador.aplicar(this->getInfo());
 				if(this->getDerecho() != NULL){
-					this->getDerechp()->recorridoPreOrden(operador);
+					this->getDerecho()->recorridoPreOrden(operador);
 				}
 			}
 
@@ -123,12 +123,12 @@ namespace ed
 
 			void setIzquierdo(NodoArbolBinario *n)
 			{
-				this->_izquierdo = n.getIzquierdo();
+				this->_izquierdo = n->getIzquierdo();
 			}
 
 			void setDerecho(NodoArbolBinario *n)
 			{
-				this->_derecho = n.getDerecho();
+				this->_derecho = n->getDerecho();
 			}
 
 			NodoArbolBinario & operator=(const NodoArbolBinario &n)
@@ -193,7 +193,7 @@ namespace ed
 		bool insertar(const G &x)
 		{
 			bool valor;
-			NodoArbolBinario *nuevo(x);
+			NodoArbolBinario nuevo(x);
 			NodoArbolBinario *aux(this->_raiz);
 
 			if(this->buscar(x) == true ){
@@ -202,17 +202,17 @@ namespace ed
 				while(aux != NULL){
 					if(aux->getInfo() > x){ //si x es menor que aux se comprueba el hijo izquierdo de aux
 						if(aux->getIzquierdo() == NULL){ //si no exsite, se añade ahi el nuevo nodo
-							aux->setIzquierdo(nuevo);
+							aux->setIzquierdo(&nuevo);
 							this->_padre = aux;
-							this->_actual = nuevo;
+							this->_actual = &nuevo;
 						}else{//si existe se sigue comprobando el arbol
 							aux = aux->getIzquierdo();
 						}
 					}else{//si x es mayor que aux se comprueba el hijo derecho de aux
 						if(aux->getDerecho() == NULL){//si no existe, se añade ahi el nuevo nodo
-							aux->setDerecho(nuevo);
+							aux->setDerecho(&nuevo);
 							this->_padre = aux;
-							this->_actual = nuevo;
+							this->_actual = &nuevo;
 						}else{//si existe se sigue comprobando el arbol
 							aux = aux->getDerecho();
 						}
@@ -247,37 +247,58 @@ namespace ed
 				assert( this->existeActual() == true );
 			#endif
 
-			bool valor;
-			NodoArbolBinario *aux(this->_actual);
+			NodoArbolBinario * anterior(this->_actual);
+			this->_actual = NULL; //borramos el elemento que apunte actual
+			NodoArbolBinario * nuevo(NULL);
+			bool valor = false;
 
-			if(aux->esHoja()){
-				this->_actual = NULL;
-				this->_actual = this->_padre;
+			if(anterior->getDerecho()){//si tiene hijo derecho
+				nuevo = anterior->getDerecho();
+				while(nuevo != NULL){//buscamos por todos los hijos izquierdos hasta llegar al que apunte a null
+					if(nuevo->getIzquierdo() == NULL){
+						this->_actual = nuevo; //si es el ultimo, este será el valor a reemplazar por el que hemos borrado
+					}
+					nuevo = nuevo->getIzquierdo();
+				}
+			}else if(anterior->getIzquierdo()){//si tiene hijo izquierdo
+				nuevo = anterior->getIzquierdo();
+				while(nuevo != NULL){//buscamos por todos los hijos derechos hasta llegar al que apunte a null
+					if(nuevo->getDerecho() == NULL){
+						this->_actual = nuevo; ////si es el ultimo, este será el valor a reemplazar por el que hemos borrado
+					}
+					nuevo = nuevo->getDerecho();
+				}
+			}else{//actual apunta a una hoja por lo que lo ponemos apuntando a la raiz
+				this->_actual = this->_raiz;
 			}
+
+			#ifndef NDEBUG
+				assert( buscar(anterior->getInfo()) == false );
+			#endif
 
 			return valor;
 		}
 
 		void recorridoPreOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			this->_raiz->recorridoPreOrden(operador);
 		}
 
 		void recorridoPostOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			this->_raiz->recorridoPostOrden(operador);
 		}
 
 		void recorridoInOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			this->_raiz->recorridoInOrden(operador);
 		}
 
-		bool buscar(const G& x) const
+		bool buscar(const G& x)
 		{
 			bool valor = false;
-			NodoArbolBinario * aux(this->_raiz);
-			NodoArbolBinario * anterior();
+			NodoArbolBinario *aux(this->_raiz);
+			NodoArbolBinario *anterior(NULL);
 
 			while (aux != NULL){//busqueda a traves del arbol binario empezando en la raiz mientras aux exista
 				if(aux->getInfo() > x){ // si x es menor que el nodo aux
@@ -293,7 +314,7 @@ namespace ed
 				}
 			}
 			#ifndef NDEBUG
-				assert( (aux->getInfo() == x ) == valor );
+				assert( (aux->getInfo() == x) == valor );
 			#endif
 
 			return valor;
@@ -320,7 +341,6 @@ namespace ed
 
 		bool existeActual() const
 		{
-			// TODO
 			#ifndef NDEBUG
 				assert( this->estaVacio() == false );
 			#endif
@@ -335,7 +355,6 @@ namespace ed
 
 		G actual() const
 		{
-			// TODO
 			#ifndef NDEBUG
 				assert( this->existeActual() == true );
 			#endif
