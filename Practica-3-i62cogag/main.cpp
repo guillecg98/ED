@@ -16,7 +16,8 @@ int main()
   ArbolBinarioOrdenadoEnlazado<Persona> a;
 
   // TODO
-  int option;
+  int option,nPersonas,cont;
+	Persona p;
 
   do{
     option = menu();
@@ -33,7 +34,47 @@ int main()
 				std::cout << RESET;
 			break;
 
+		case 1:
+				std::cout<<"Inserte el numero de personas\n";
+				std::cin>>nPersonas;
+				cont = 0;
+				for(int i = 0; i<nPersonas; i++){
+					p = generarDatosPersonales();
+					if(a.insertar(p)){
+						cont++;
+					}
+				}
+				std::cout<<"Se han insertado "<<cont<<" personas. "<<nPersonas-cont<<" ya existian en el arbol\n";
+			break;
 
+		case 2:
+				std::cout<<"Esta opcion está en desarrollo\n";
+			break;
+
+		case 3:
+				std::cout<<"Esta opcion está en desarrollo\n";
+			break;
+
+		case 4:
+				std::cout<<"Esta opcion está en desarrollo\n";
+			break;
+
+		case 5:
+				std::cout<<"Esta opcion está en desarrollo\n";
+			break;
+
+		case 6:
+				std::cout<<"Esta opcion está en desarrollo\n";
+			break;
+
+		case 7:
+				if(a.estaVacio() == false){
+					a.borrarArbol();
+					std::cout<<"Se ha eliminado el arbol completo\n";
+				}else{
+					std::cout<<"El arbol ya está vacio\n";
+				}
+			break;
 
     default:
 				std::cout << BIRED;

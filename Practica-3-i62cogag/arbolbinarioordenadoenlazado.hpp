@@ -35,7 +35,9 @@ namespace ed
 		public:
 			NodoArbolBinario (const G &info)
 			{
-				this->setInfo(info);
+				this->_info = info;
+				this->_derecho = NULL;
+				this->_izquierdo = NULL;
 
 				#ifndef NDEBUG
 					assert( this->esHoja() == true );
@@ -72,7 +74,7 @@ namespace ed
 			{
 				bool valor = false;
 
-				if((this->getDerecho() == NULL) && (this->getIzquierdo() == NULL)){
+				if((this->getIzquierdo() == NULL) && (this->getDerecho() == NULL)){
 					valor = true;
 				}
 
@@ -193,26 +195,30 @@ namespace ed
 		bool insertar(const G &x)
 		{
 			bool valor;
-			NodoArbolBinario nuevo(x);
 			NodoArbolBinario *aux(this->_raiz);
+			NodoArbolBinario *nuevo = new NodoArbolBinario(x);
 
 			if(this->buscar(x) == true ){
 				valor = false;
+			}else if(aux == NULL){//Si estamos insertando el primer elemento, la raiz apuntará a null antes de insertarlo
+				this->_raiz = nuevo;
+				this->_actual = nuevo;
+				this->_padre = nuevo;
 			}else{
 				while(aux != NULL){
 					if(aux->getInfo() > x){ //si x es menor que aux se comprueba el hijo izquierdo de aux
 						if(aux->getIzquierdo() == NULL){ //si no exsite, se añade ahi el nuevo nodo
-							aux->setIzquierdo(&nuevo);
+							aux->setIzquierdo(nuevo);
 							this->_padre = aux;
-							this->_actual = &nuevo;
+							this->_actual = nuevo;
 						}else{//si existe se sigue comprobando el arbol
 							aux = aux->getIzquierdo();
 						}
 					}else{//si x es mayor que aux se comprueba el hijo derecho de aux
 						if(aux->getDerecho() == NULL){//si no existe, se añade ahi el nuevo nodo
-							aux->setDerecho(&nuevo);
+							aux->setDerecho(nuevo);
 							this->_padre = aux;
-							this->_actual = &nuevo;
+							this->_actual = nuevo;
 						}else{//si existe se sigue comprobando el arbol
 							aux = aux->getDerecho();
 						}
