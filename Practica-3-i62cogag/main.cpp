@@ -17,7 +17,6 @@ int main()
 
   // TODO
   int option,nPersonas,cont;
-	Persona p;
 
   do{
     option = menu();
@@ -39,8 +38,7 @@ int main()
 				std::cin>>nPersonas;
 				cont = 0;
 				for(int i = 0; i<nPersonas; i++){
-					p = generarDatosPersonales();
-					if(a.insertar(p)){
+					if(a.insertar(generarDatosPersonales())){
 						cont++;
 					}
 				}

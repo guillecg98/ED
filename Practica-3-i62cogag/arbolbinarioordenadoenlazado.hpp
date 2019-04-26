@@ -35,9 +35,9 @@ namespace ed
 		public:
 			NodoArbolBinario (const G &info)
 			{
-				this->_info = info;
-				this->_derecho = NULL;
-				this->_izquierdo = NULL;
+				this->setInfo(info);
+				this->setDerecho(NULL);
+				this->setIzquierdo(NULL);
 
 				#ifndef NDEBUG
 					assert( this->esHoja() == true );
@@ -46,6 +46,7 @@ namespace ed
 
 			NodoArbolBinario (const NodoArbolBinario &n)
 			{
+				std::cout<<"error2\n";
 				*this = n;
 				#ifndef NDEBUG
 					assert( this->getInfo() == n.getInfo() );
@@ -125,12 +126,12 @@ namespace ed
 
 			void setIzquierdo(NodoArbolBinario *n)
 			{
-				this->_izquierdo = n->getIzquierdo();
+				this->_izquierdo = n;
 			}
 
 			void setDerecho(NodoArbolBinario *n)
 			{
-				this->_derecho = n->getDerecho();
+				this->_derecho = n;
 			}
 
 			NodoArbolBinario & operator=(const NodoArbolBinario &n)
@@ -170,7 +171,7 @@ namespace ed
 		ArbolBinarioOrdenadoEnlazado (const ArbolBinarioOrdenadoEnlazado<G>& a)
 		{
 			// TODO
-			*this = a;
+			*this = *a;
 			#ifndef NDEBUG
 				assert( this->_raiz == a._raiz );
 				assert( this->_actual == a._actual );
@@ -194,42 +195,81 @@ namespace ed
 
 		bool insertar(const G &x)
 		{
-			bool valor;
-			NodoArbolBinario *aux(this->_raiz);
-			NodoArbolBinario *nuevo = new NodoArbolBinario(x);
+			/*bool valor = false;
+			int flag = 0;
+			NodoArbolBinario *aux=this->_raiz;
+			NodoArbolBinario nuevo(x);
 
 			if(this->buscar(x) == true ){
 				valor = false;
-			}else if(aux == NULL){//Si estamos insertando el primer elemento, la raiz apuntará a null antes de insertarlo
-				this->_raiz = nuevo;
-				this->_actual = nuevo;
-				this->_padre = nuevo;
-			}else{
-				while(aux != NULL){
-					if(aux->getInfo() > x){ //si x es menor que aux se comprueba el hijo izquierdo de aux
-						if(aux->getIzquierdo() == NULL){ //si no exsite, se añade ahi el nuevo nodo
-							aux->setIzquierdo(nuevo);
-							this->_padre = aux;
-							this->_actual = nuevo;
-						}else{//si existe se sigue comprobando el arbol
-							aux = aux->getIzquierdo();
-						}
-					}else{//si x es mayor que aux se comprueba el hijo derecho de aux
-						if(aux->getDerecho() == NULL){//si no existe, se añade ahi el nuevo nodo
-							aux->setDerecho(nuevo);
-							this->_padre = aux;
-							this->_actual = nuevo;
-						}else{//si existe se sigue comprobando el arbol
-							aux = aux->getDerecho();
+			}else if(aux == 0){//Si estamos insertando el primer elemento, la raiz apuntará a null antes de insertarlo
+					this->_raiz = &nuevo;
+					//this->_actual = &nuevo;
+					//this->_padre = &nuevo;
+					valor = true;
+				}else{ //si no estamos insertando el primer elemento
+					while(flag == 0){
+						if(aux->getInfo() > x){ //si x es menor que aux se comprueba el hijo izquierdo de aux
+							if(aux->getIzquierdo() == NULL){ //si no exsite, se añade ahi el nuevo nodo
+								aux->setIzquierdo(&nuevo);
+								//this->_padre = aux;
+								//this->_actual = nuevo;
+								valor = true;
+								flag = 1;
+							}else{//si existe se sigue comprobando el arbol
+								aux = aux->getIzquierdo();
+							}
+						}else if(aux->getInfo() < x){//si x es mayor que aux se comprueba el hijo derecho de aux
+							if(aux->getDerecho() == NULL){//si no existe, se añade ahi el nuevo nodo
+								aux->setDerecho(&nuevo);
+								//this->_padre = aux;
+								//this->_actual = nuevo;
+								valor = true;
+								flag = 1;
+							}else{//si existe se sigue comprobando el arbol
+								aux = aux->getDerecho();
+							}
 						}
 					}
 				}
-			}
 			#ifndef NDEBUG
-				assert( this->buscar(x) == true );
+				assert( this->buscar(x) == valor );
 			#endif
 
-			return valor;
+			return valor;*/
+
+
+  bool valorDevuelto = false;
+  NodoArbolBinario nuevo(x);
+
+  if (this->_raiz == NULL)
+  {
+   this->_raiz = &nuevo;
+   valorDevuelto = true;
+   return valorDevuelto;
+  }
+  NodoArbolBinario *anterior, *recor;
+  anterior = NULL;
+
+  recor = this->_raiz;
+  while (recor != NULL)
+  {
+   anterior = recor;
+   if (x < recor->getInfo())
+    recor = recor->getIzquierdo();
+   else
+    recor = recor->getDerecho();
+  }
+  if (x < anterior->getInfo())
+   anterior->setIzquierdo(&nuevo);
+  else
+   anterior->setDerecho(&nuevo);
+
+#ifndef NDEBUG
+  assert(this->buscar(x) == true);
+#endif
+  return valorDevuelto;
+
 		}
 
 		void borrarArbol()
@@ -302,25 +342,36 @@ namespace ed
 
 		bool buscar(const G& x)
 		{
+			int flag = 0;
 			bool valor = false;
-			NodoArbolBinario *aux(this->_raiz);
-			NodoArbolBinario *anterior(NULL);
+			this->_actual = this->_raiz;
+			NodoArbolBinario *anterior=NULL;
+			this->_padre = anterior;
 
-			while (aux != NULL){//busqueda a traves del arbol binario empezando en la raiz mientras aux exista
-				if(aux->getInfo() > x){ // si x es menor que el nodo aux
-					anterior = aux;
-					aux = aux->getIzquierdo();
-				}else if (aux->getInfo() < x){// si x es mayor que el nodo auxiliar
-					anterior = aux;
-					aux = aux->getDerecho();
-				}else{ // si es igual que el nodo aux
-					this->_actual = aux;
+			while (flag == 0){//busqueda a traves del arbol binario empezando en la raiz mientras aux exista
+				if(this->_actual->getInfo() > x){ // si x es menor que el nodo actual
+					if(this->_actual->getIzquierdo() != NULL){//si existe izquierdo
+						anterior = this->_actual;
+						this->_actual = this->_actual->getIzquierdo();
+					}
+					flag = 1;
+				}
+				if (this->_actual->getInfo() < x){// si x es mayor que el nodo auxiliar
+					if(this->_actual->getDerecho() != NULL){//si existe derecho
+						anterior = this->_actual;
+						this->_actual = this->_actual->getDerecho();
+					}
+					flag = 1;
+				}
+				if(this->_actual->getInfo() == x){ // si es igual que el nodo actual
 					this->_padre = anterior;
 					valor = true;
+					flag = 1;
 				}
 			}
+
 			#ifndef NDEBUG
-				assert( (aux->getInfo() == x) == valor );
+				assert( (this->_actual->getInfo() == x) == valor );
 			#endif
 
 			return valor;
