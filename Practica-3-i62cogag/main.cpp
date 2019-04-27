@@ -9,6 +9,7 @@
 
 using namespace ed;
 int menu();
+int generaRandom();
 
 int main()
 {
@@ -17,6 +18,9 @@ int main()
 
   // TODO
   int option,nPersonas,cont;
+	Persona p;
+	EscribirNodo<Persona> escribe;
+	AlmacenarNodo<Persona> almacena;
 
   do{
     option = menu();
@@ -38,27 +42,52 @@ int main()
 				std::cin>>nPersonas;
 				cont = 0;
 				for(int i = 0; i<nPersonas; i++){
-					if(a.insertar(generarDatosPersonales())){
+					p = generarDatosPersonales();
+					if(a.insertar(p)){
 						cont++;
 					}
 				}
-				std::cout<<"Se han insertado "<<cont<<" personas. "<<nPersonas-cont<<" ya existian en el arbol\n";
+				std::cout<<"Se han insertado "<<cont<<" personas\n";
 			break;
 
 		case 2:
-				std::cout<<"Esta opcion está en desarrollo\n";
+				std::cout<<"Introduce los datos del usuario a comprobar\n";
+				std::cin>>p;
+				if(a.buscar(p)){
+					std::cout<<p;
+				}else{
+					std::cout<<"La persona que busca no se encuentra en el arbol\n";
+				}
 			break;
 
 		case 3:
-				std::cout<<"Esta opcion está en desarrollo\n";
+				if(a.estaVacio()){
+					std::cout<<"No se pueden mostrar ya que el arbol está vacio\n";
+				}else{
+					a.recorridoPreOrden(almacena);//se almacenan los datos
+					std::cout<<"Los datos pre orden son:\n";
+					a.recorridoPreOrden(escribe);
+				}
 			break;
 
 		case 4:
-				std::cout<<"Esta opcion está en desarrollo\n";
+				if(a.estaVacio()){
+					std::cout<<"No se pueden mostrar ya que el arbol está vacio\n";
+				}else{
+					a.recorridoPostOrden(almacena);//se almacenan los datos
+					std::cout<<"Los datos post orden son:\n";
+					a.recorridoPostOrden(escribe);
+				}
 			break;
 
 		case 5:
-				std::cout<<"Esta opcion está en desarrollo\n";
+				if(a.estaVacio()){
+					std::cout<<"No se pueden mostrar ya que el arbol está vacio\n";
+				}else{
+					a.recorridoInOrden(almacena);//se almacenan los datos
+					std::cout<<"Los datos in orden son:\n";
+					a.recorridoInOrden(escribe);
+				}
 			break;
 
 		case 6:
@@ -156,4 +185,9 @@ int menu(){
     std::cin.ignore();
 
 	return opcion;
+}
+
+int generaRandom(){
+	int valor = rand() % 100;
+	return valor;
 }
