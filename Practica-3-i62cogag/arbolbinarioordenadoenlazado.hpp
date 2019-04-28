@@ -98,10 +98,10 @@ namespace ed
 			{
 				// TODO
 				if(this->getIzquierdo() != NULL){
-					this->getIzquierdo()->recorridoPreOrden(operador);
+					this->getIzquierdo()->recorridoPostOrden(operador);
 				}
 				if(this->getDerecho() != NULL){
-					this->getDerecho()->recorridoPreOrden(operador);
+					this->getDerecho()->recorridoPostOrden(operador);
 				}
 				operador.aplicar(this->getInfo());
 			}
@@ -114,7 +114,7 @@ namespace ed
 				}
 				operador.aplicar(this->getInfo());
 				if(this->getDerecho() != NULL){
-					this->getDerecho()->recorridoPreOrden(operador);
+					this->getDerecho()->recorridoInOrden(operador);
 				}
 			}
 
@@ -202,9 +202,6 @@ namespace ed
 			for(int i = 0; i< myvec.size(); i++){
 				this->insertar(myvec[i]);
 			}
-			/*this->_raiz = a._raiz;
-			this->_actual = a._actual;
-			this->_padre = a._padre;*/
 		}
 
 		bool insertar(const G &x)
@@ -266,37 +263,86 @@ namespace ed
 				assert( this->existeActual() == true );
 			#endif
 
-			NodoArbolBinario * anterior(this->_actual);
-			this->_actual = NULL; //borramos el elemento que apunte actual
-			NodoArbolBinario * nuevo(NULL);
-			bool valor = false;
+			if (this->_actual->esHoja()){// si el nodo es hoja
+            	if(this->_actual == this->_raiz){//si es la raiz
+                	delete this->_actual;
+                	this->_actual=NULL;
+                	this->_raiz=NULL;
+                	this->_padre=NULL;
+            	}else if(this->_padre->getIzquierdo()){
+					if(this->_padre->getIzquierdo() == this->_actual){//si el elemento a borrar es ese hijo izquierdo
+                    	this->_padre->setIzquierdo(0);
+                	}else{//el elemento estará en el hijo derecho
+                    	this->_padre->setDerecho(0);
+                	}
+				}
+	            else{//si no tiene hijo izquierdo, el elemento está en el hijo derecho del padre
+	                this->_padre->setDerecho(0);
+            	}
 
-			if(anterior->getDerecho()){//si tiene hijo derecho
-				nuevo = anterior->getDerecho();
-				while(nuevo != NULL){//buscamos por todos los hijos izquierdos hasta llegar al que apunte a null
-					if(nuevo->getIzquierdo() == NULL){
-						this->_actual = nuevo; //si es el ultimo, este será el valor a reemplazar por el que hemos borrado
+				this->_padre=NULL;
+				delete this->_actual;
+				this->_actual=NULL;
+				return true;
+
+			}else if ( (!this->_actual->getIzquierdo()) || (!this->_actual->getDerecho()) ){//si el elemento a borrar tiene un solo hijo
+				if (this->_actual->getIzquierdo()){//si solo tiene hijo izquierdo
+					if(this->_actual == this->_raiz){//si es la raiz de nuevo
+						this->_actual = this->_actual->getIzquierdo();
+					}else{//si actual no es la raiz
+						if (this->_actual->getInfo() < this->_padre->getInfo()){//si es menor que el padre, a ese elemento le asignamos su hijo izquierdo
+							this->_padre->setIzquierdo(this->_actual->getIzquierdo());
+						}else{//si es mayor que el padre, a ese elemento le asignamos su hijo izquierdo
+							this->_padre->setDerecho(this->_actual->getIzquierdo());
+						}
+
 					}
-					nuevo = nuevo->getIzquierdo();
-				}
-			}else if(anterior->getIzquierdo()){//si tiene hijo izquierdo
-				nuevo = anterior->getIzquierdo();
-				while(nuevo != NULL){//buscamos por todos los hijos derechos hasta llegar al que apunte a null
-					if(nuevo->getDerecho() == NULL){
-						this->_actual = nuevo; ////si es el ultimo, este será el valor a reemplazar por el que hemos borrado
+
+					delete this->_actual;
+					this->_actual=NULL;
+					return true;
+
+				}else{//si solo tiene hijo derecho
+					if(this->_actual == this->_raiz){//si es la raiz
+						this->_padre=NULL;
+						this->_raiz=this->_actual->getDerecho();
+					}else{
+						if (this->_actual->getInfo() < this->_padre->getInfo()){//si es menor que el padre, a ese elemento le asignamos su hijo derecho
+							this->_padre->setIzquierdo(this->_actual->getDerecho());
+						}else{//si es mayor que el padre, a ese elemento le asignamos su hijo derecho
+							this->_padre->setDerecho(this->_actual->getDerecho());
+						}
 					}
-					nuevo = nuevo->getDerecho();
+
+					delete this->_actual;
+					this->_actual=NULL;
+					return true;
+
 				}
-			}else{//actual apunta a una hoja por lo que lo ponemos apuntando a la raiz
-				this->_actual = this->_raiz;
+			}else{ // si el actual tiene 2 hijos
+
+				NodoArbolBinario *aux = this->_actual->getIzquierdo();
+				NodoArbolBinario *anterior = aux;
+				while (aux->getDerecho() != NULL){
+					anterior = aux;
+					aux = aux->getDerecho();
+				}
+
+            	if(this->_actual->getIzquierdo() == aux){
+                	this->_actual->setIzquierdo(aux->getIzquierdo());
+            	}else{
+			    	anterior->setDerecho(aux->getIzquierdo());
+            	}
+
+				this->_actual->setInfo(aux->getInfo());
+
+				delete aux;
+				this->_actual=NULL;
+				this->_padre=NULL;
+				return true;
 			}
-
-			#ifndef NDEBUG
-				assert( buscar(anterior->getInfo()) == false );
-			#endif
-
-			return valor;
-		}
+	}
+		//-----------------------------------------------------------
 
 		void recorridoPreOrden (OperadorNodo<G> &operador) const
 		{
@@ -322,19 +368,21 @@ namespace ed
 			this->_padre = anterior;
 
 			while (flag == 0){//busqueda a traves del arbol binario empezando en la raiz mientras aux exista
-				if(this->_actual->getInfo() > x){ // si x es menor que el nodo actual
+				if(x < this->_actual->getInfo()){ // si x es menor que el nodo actual
 					if(this->_actual->getIzquierdo() != NULL){//si existe izquierdo
 						anterior = this->_actual;
 						this->_actual = this->_actual->getIzquierdo();
+					}else{
+						flag = 1;
 					}
-					flag = 1;
 				}
-				if (this->_actual->getInfo() < x){// si x es mayor que el nodo auxiliar
+				if (x > this->_actual->getInfo()){// si x es mayor que el nodo auxiliar
 					if(this->_actual->getDerecho() != NULL){//si existe derecho
 						anterior = this->_actual;
 						this->_actual = this->_actual->getDerecho();
+					}else{
+						flag = 1;
 					}
-					flag = 1;
 				}
 				if(this->_actual->getInfo() == x){ // si es igual que el nodo actual
 					this->_padre = anterior;
@@ -376,7 +424,7 @@ namespace ed
 			#endif
 			bool valor = false;
 
-			if((this->_actual->getDerecho() != NULL) || (this->_actual->getIzquierdo() != NULL)){
+			if(this->_actual != NULL){
 				valor = true;
 			}
 
