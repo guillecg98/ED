@@ -341,8 +341,7 @@ namespace ed
 				this->_padre=NULL;
 				return true;
 			}
-	}
-		//-----------------------------------------------------------
+		}
 
 		void recorridoPreOrden (OperadorNodo<G> &operador) const
 		{
