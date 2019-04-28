@@ -51,16 +51,16 @@ int main()
 			break;
 
 		case 2:
-				std::cout<<"Introduce los datos del usuario a comprobar\n";
-				std::cin>>p;
-				if(a.estaVacio()){
-					std::cout<<"El arbol no tiene ningun dato\n";
-				}else{
+				if(!a.estaVacio()){
+					std::cout<<"Introduce los datos del usuario a comprobar\n";
+					std::cin>>p;
 					if(a.buscar(p)){
 						std::cout<<"La persona está en el arbol:\n"<<p;
 					}else{
 					std::cout<<"La persona que busca no se encuentra en el arbol\n";
 					}
+				}else{
+					std::cout<<"El arbol está vacio\n";
 				}
 			break;
 
