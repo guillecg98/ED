@@ -14,13 +14,13 @@ int generaRandom();
 int main()
 {
   srand(time(0));
-  ArbolBinarioOrdenadoEnlazado<Persona> a;
+  ArbolBinarioOrdenadoEnlazado<int> a;
 
   // TODO
   int option,nPersonas,cont;
-	Persona p;
-	EscribirNodo<Persona> escribe;
-	AlmacenarNodo<Persona> almacena;
+	int num;
+	EscribirNodo<int> escribe;
+	AlmacenarNodo<int> almacena;
 
   do{
     option = menu();
@@ -38,26 +38,26 @@ int main()
 			break;
 
 		case 1:
-				std::cout<<"Inserte el numero de personas\n";
+				std::cout<<"Inserte el numero de numeros\n";
 				std::cin>>nPersonas;
 				cont = 0;
 				for(int i = 0; i<nPersonas; i++){
-					p = generarDatosPersonales();
-					if(a.insertar(p)){
+					std::cin>>num;
+					if(a.insertar(num)){
 						cont++;
 					}
 				}
-				std::cout<<"Se han insertado "<<cont<<" personas\n";
+				std::cout<<"Se han insertado "<<cont<<" numeros\n";
 			break;
 
 		case 2:
 				if(!a.estaVacio()){
-					std::cout<<"Introduce los datos del usuario a comprobar\n";
-					std::cin>>p;
-					if(a.buscar(p)){
-						std::cout<<"La persona está en el arbol:\n"<<p;
+					std::cout<<"Introduce el numero a comprobar\n";
+					std::cin>>num;
+					if(a.buscar(num)){
+						std::cout<<"El numero está en el arbol:\n"<<num;
 					}else{
-					std::cout<<"La persona que busca no se encuentra en el arbol\n";
+					std::cout<<"El numero que busca no se encuentra en el arbol\n";
 					}
 				}else{
 					std::cout<<"El arbol está vacio\n";
@@ -96,13 +96,13 @@ int main()
 
 		case 6:
 				if(!a.estaVacio()){
-					std::cout<<"Introduce los datos del usuario a borrar\n";
-					std::cin>>p;
-					if(a.buscar(p)){
+					std::cout<<"Introduce el numero a borrar\n";
+					std::cin>>num;
+					if(a.buscar(num)){
 						a.borrar();
-						std::cout<<"Se ha eliminado a la persona indicada\n";
+						std::cout<<"Se ha eliminado el numero indicado\n";
 					}else{
-						std::cout<<"No existe la persona que desea borrar\n";
+						std::cout<<"No existe el numero que desea borrar\n";
 					}
 				}else{
 					std::cout<<"El arbol está vacio\n";
