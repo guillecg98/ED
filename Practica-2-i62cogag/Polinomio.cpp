@@ -204,6 +204,9 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
 			{
 				m = this->vector[i] / p.vector[j];
 				nuevo->vector.push_back(m);
+			}else{
+				nuevo->vector.push_back(this->vector[i]);
+				// nuevo->vector.push_back()
 			}
 		}
 	}
